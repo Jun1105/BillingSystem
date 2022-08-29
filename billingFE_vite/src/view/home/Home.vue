@@ -225,9 +225,9 @@
   }
 
   onMounted(async () => {
-    await getSevenEcharts()
-    await getSevenPie()
-    await getWeekECharts()
+    getSevenEcharts()
+    getSevenPie()
+    getWeekECharts()
   })
 </script>
 <template>

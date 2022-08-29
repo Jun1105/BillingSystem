@@ -6,6 +6,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class DateUtil {
 
     /**
@@ -27,5 +29,12 @@ public class DateUtil {
         List<LocalDate> lastDate = getLastDate(4);
         List<LocalDate> lastDate1 = getLastDate(4);
         System.out.println(lastDate.get(0).isBefore(lastDate1.get(0)));
+        LocalDate day0 = LocalDate.of(2022, 8, 29);
+        System.out.println(day0.toString());
+
+        LocalDate day1 = LocalDate.of(2022, 9, 4);
+        System.out.println(day1.toString());
+
+        System.out.println(DAYS.between(day0, day1));
     }
 }

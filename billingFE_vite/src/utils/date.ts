@@ -53,4 +53,27 @@ function getWeek(n) {
   return [getDate(mon), getDate(lastSun)]
 }
 
-export { getDate, yesterday, sevenBefore, getOneWeek, getWeek, sevenAfter }
+/**
+ * 获取月初到今日日期
+ * @date 2022-09-09
+ * @returns {Array}
+ */
+function getCurrentMonth() {
+  const dd = new Date()
+  const y = dd.getFullYear()
+  const m =
+    dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1
+  return [`${y}-${m}-01`, getDate(dd)]
+}
+
+// function getLastMonth() {}
+
+export {
+  getDate,
+  yesterday,
+  sevenBefore,
+  getOneWeek,
+  getWeek,
+  sevenAfter,
+  getCurrentMonth
+}

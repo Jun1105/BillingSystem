@@ -15,10 +15,13 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -74,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
         }
         List<OrderCount> orderCount = orderMapper.getOrderCount(orderCountRequest);
         List<OrderCount> orderCounts = new ArrayList<>();
-        List<LocalDate> weekPeriod = getWeekPeriod(orderCountRequest.getStartDate());
+        List<LocalDate> weekPeriod = getWeekPeriod(orderCountRequest.getStartDate(), orderCountRequest.getEndDate());
         for (LocalDate localDate : weekPeriod) {
             OrderCount count = new OrderCount(localDate,new BigDecimal(0));
             Optional<OrderCount> countDb = orderCount.stream().filter(o -> o.getDate().equals(localDate)).findFirst();
@@ -145,11 +148,12 @@ public class OrderServiceImpl implements OrderService {
         return orderCountList;
     }
 
-    private List<LocalDate> getWeekPeriod(LocalDate startDate){
+    private List<LocalDate> getWeekPeriod(LocalDate startDate, LocalDate endDate){
         List<LocalDate> weekPeriod = new ArrayList<>();
+        long day = DAYS.between(startDate, endDate);
         weekPeriod.add(startDate);
-        for (int i = 1; i < 7; i++) {
-            LocalDate localDate = weekPeriod.get(i - 1);
+        for (int i = 0; i <= day; i++) {
+            LocalDate localDate = weekPeriod.get(i);
             weekPeriod.add(localDate.plusDays(1));
         }
        return weekPeriod;
