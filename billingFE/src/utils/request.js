@@ -2,18 +2,18 @@ import axios from 'axios'
 
 // 创建请求
 const service = axios.create({
-    baseURL: process.env.VUE_APP_API,//.env文件配置接口地址
+    baseURL: '/api',
     timeout: 60 * 1000, // 超时
     // withCredentials: true, // 异步请求携带cookie
-    headers: {
-        // 设置后端需要的传参类型
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
 })
-
 // 请求前
 service.interceptors.request.use(
     (config) => {
+        if (config.method === 'get') {
+            config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        } else {
+            config.headers['Content-Type'] = 'application/json'
+        }
         return config
     },
     (error) => {
@@ -32,5 +32,4 @@ service.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
 export default service
