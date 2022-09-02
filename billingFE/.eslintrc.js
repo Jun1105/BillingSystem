@@ -1,6 +1,11 @@
 module.exports = {
-    "parserOptions": {
+    root: true,
+    parserOptions: {
         "ecmaVersion": 7,
-        "sourceType": "module"
+        sourceType: 'module'
+    },
+    "parser": "vue-eslint-parser",   // 添加这一句
+    rules: {
+        "@typescript-eslint/explicit-module-boundary-types": "off"
     }
 }
