@@ -9,16 +9,28 @@ module.exports = {
         "ecmaVersion": 7,
         sourceType: 'module'
     },
+    "extends": [
+        //默认使用vue2的配置
+        //"plugin:vue/essential",
+        //修改使用vue3的规则
+        "plugin:vue/vue3-strongly-recommended"
+    ],
     "parser": "vue-eslint-parser",
+    "plugins": [
+        "vue",
+    ],
     rules: {
         quotes: [2, 'single'], // 强制使用一致的反勾号、双引号或单引号
         eqeqeq: [2, 'always'], // 要求使用 === 和 !==
         // indent: [2, 4],
-        "no-unused-vars":"off",
+        "no-unused-vars": "off",
         'no-multiple-empty-lines': 0,
         "@typescript-eslint/explicit-module-boundary-types": "off",
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off', // 上线环境用打印就报警告, 开发环境关闭此规则
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off', // debugger可以终止代码执行
-        'no-multiple-empty-lines': 'off' // 不允许有连续多行空行(关闭规则)
+        'no-multiple-empty-lines': 'off', // 不允许有连续多行空行(关闭规则)
+        'no-const-assign': 2,//禁止修改const声明变量
+        "comma-dangle": 2, // 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号
+        "comma-spacing": [2, { 'before': false, 'after': true }],  // 控制逗号前后的空格
     }
 }
