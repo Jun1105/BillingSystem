@@ -2,8 +2,8 @@ import request from '@/utils/request'
 
 function getlogin(){
     return request({
-        url: '/hello',
-        method: 'get'
+        url: '/login',
+        method: 'post'
     })
 }
 
