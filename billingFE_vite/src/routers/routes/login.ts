@@ -1,8 +1,10 @@
-import Login from "@/view/login"
+/** @format */
+
+import Login from '@/view/login'
 
 const login = {
-    path: "/login",
-    component: () => Login
+  path: '/login',
+  component: () => Login,
 }
 
 export default login
