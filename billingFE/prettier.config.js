@@ -30,5 +30,5 @@ module.exports = {
     // vue 文件中，是否给 script 和 style 内的代码添加缩进。
     vueIndentScriptAndStyle: true,
     // 指定代码最后是否添加一行空行
-    endOfLine: 'lf',
+    endOfLine: 'lf'
 }
