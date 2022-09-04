@@ -17,4 +17,13 @@ public class Result<T> implements Serializable {
         result.setData(data);
         return result;
     }
+
+    public static <T> Result<T> error(String msg){
+        Result<T> result = new Result<>();
+        result.setCode(-1);
+        result.setMsg(msg);
+        result.setData(null);
+        return result;
+    }
+
 }

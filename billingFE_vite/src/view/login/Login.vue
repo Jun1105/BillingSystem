@@ -1,5 +1,56 @@
 <!-- @format -->
 
+<script lang="ts">
+  import { defineComponent, reactive, ref } from 'vue'
+  import type { FormInstance, FormRules } from 'element-plus'
+  import { login } from '@/api/login'
+  export default defineComponent({
+    setup() {
+      const formRef = ref<FormInstance>()
+      const ruleForm = reactive({
+        username: '',
+        password: ''
+      })
+
+      const rules = reactive<FormRules>({
+        username: [
+          { required: true, message: 'Please input username', trigger: 'blur' },
+          { min: 3, message: 'Min Length min 3', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: 'Please input password', trigger: 'blur' },
+          { min: 3, message: 'Min Length is 3', trigger: 'blur' }
+        ]
+      })
+
+      const submitForm = async (formEl: FormInstance | undefined) => {
+        if (!formEl) return
+        await formEl.validate((valid, fields) => {
+          if (valid) {
+            console.log(ruleForm)
+            login(ruleForm)
+            console.log('submit!')
+          } else {
+            console.log('error submit!', fields)
+          }
+        })
+      }
+
+      const resetForm = (formEl: FormInstance | undefined) => {
+        if (!formEl) return
+        formEl.resetFields()
+      }
+
+      return {
+        formRef,
+        ruleForm,
+        rules,
+        submitForm,
+        resetForm
+      }
+    }
+  })
+</script>
 <template>
   <div class="box-card">
     <el-card shadow="always">
@@ -29,43 +80,6 @@
     </el-card>
   </div>
 </template>
-<script lang="ts" setup>
-  import { reactive, ref } from 'vue'
-  import type { FormInstance, FormRules } from 'element-plus'
-  const formRef = ref<FormInstance>()
-  const ruleForm = reactive({
-    username: '',
-    password: ''
-  })
-
-  const rules = reactive<FormRules>({
-    username: [
-      { required: true, message: 'Please input username', trigger: 'blur' },
-      { min: 3, message: 'Min Length min 3', trigger: 'blur' }
-    ],
-    password: [
-      { required: true, message: 'Please input password', trigger: 'blur' },
-      { min: 3, message: 'Min Length is 3', trigger: 'blur' }
-    ]
-  })
-
-  const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    await formEl.validate((valid, fields) => {
-      if (valid) {
-        console.log(ruleForm)
-        console.log('submit!')
-      } else {
-        console.log('error submit!', fields)
-      }
-    })
-  }
-
-  const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
-  }
-</script>
 <style lang="scss">
   .box-card {
     width: 30%;

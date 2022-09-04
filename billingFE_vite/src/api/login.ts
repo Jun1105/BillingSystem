@@ -2,10 +2,13 @@
 
 import request from '@/utils/request'
 
-function login() {
+function login(body: { username: string; password: string }) {
   return request({
     url: '/login',
-    method: 'post'
+    method: 'post',
+    data: {
+      ...body
+    }
   })
 }
 
