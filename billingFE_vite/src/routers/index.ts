@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [...page, login]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 })
 
 router.beforeEach((to, from) => {

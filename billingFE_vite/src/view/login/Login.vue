@@ -41,11 +41,11 @@
   const rules = reactive<FormRules>({
     username: [
       { required: true, message: 'Please input username', trigger: 'blur' },
-      { min: 3, message: 'Min Length min 3', trigger: 'blur' },
+      { min: 3, message: 'Min Length min 3', trigger: 'blur' }
     ],
     password: [
       { required: true, message: 'Please input password', trigger: 'blur' },
-      { min: 3, message: 'Min Length is 3', trigger: 'blur' },
+      { min: 3, message: 'Min Length is 3', trigger: 'blur' }
     ]
   })
 

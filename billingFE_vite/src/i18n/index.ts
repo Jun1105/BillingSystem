@@ -9,11 +9,11 @@ import elementZhLocale from 'element-plus/es/locale/lang/zh-cn' // element-ui la
 const message = {
   zh: {
     ...ZH,
-    ...elementZhLocale,
+    ...elementZhLocale
   },
   en: {
     ...EN,
-    ...elementEnLocale,
+    ...elementEnLocale
   }
 }
 
@@ -21,7 +21,7 @@ const i18n = createI18n({
   legacy: false,
   globalInjection: true,
   locale: 'zh',
-  messages: message,
+  messages: message
 })
 
 export default i18n

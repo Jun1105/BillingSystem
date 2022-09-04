@@ -4,7 +4,7 @@ import Login from '@/view/login'
 
 const login = {
   path: '/login',
-  component: () => Login,
+  component: () => Login
 }
 
 export default login

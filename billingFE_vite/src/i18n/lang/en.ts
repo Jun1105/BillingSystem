@@ -1,5 +1,5 @@
 /** @format */
 
 export default {
-  message: 'Hello!',
+  message: 'Hello!'
 }

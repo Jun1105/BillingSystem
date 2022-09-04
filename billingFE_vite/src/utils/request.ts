@@ -7,7 +7,7 @@ type axiosRequestConfig = AxiosRequestConfig
 // 创建请求
 const service = axios.create({
   baseURL: '/api',
-  timeout: 60 * 1000, // 超时
+  timeout: 60 * 1000 // 超时
   // withCredentials: true, // 异步请求携带cookie
 })
 // 请求前
