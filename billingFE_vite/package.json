@@ -1,0 +1,24 @@
+{
+  "name": "billingfe_vite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "vue": "^3.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.14",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "@vue/compiler-sfc": "^3.0.4",
+    "eslint": "^8.23.0",
+    "eslint-plugin-vue": "^9.4.0",
+    "prettier": "^2.7.1",
+    "sass": "^1.54.8",
+    "typescript": "^4.8.2",
+    "vite": "^3.0.9",
+    "vue-tsc": "^0.40.6"
+  }
+}
