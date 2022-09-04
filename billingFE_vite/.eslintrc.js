@@ -7,18 +7,21 @@ module.exports = {
     },
     parserOptions: {
         "ecmaVersion": 7,
-        sourceType: 'module'
+        sourceType: 'module',
+        "parser": "@typescript-eslint/parser",
     },
     "extends": [
         //默认使用vue2的配置
         //"plugin:vue/essential",
         //修改使用vue3的规则
         "plugin:vue/vue3-strongly-recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        'plugin:@typescript-eslint/recommended',
     ],
     "parser": "vue-eslint-parser",
     "plugins": [
         "vue",
+        "@typescript-eslint"
     ],
     rules: {
         quotes: [2, 'single'], // 强制使用一致的反勾号、双引号或单引号
