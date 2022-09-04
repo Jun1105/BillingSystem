@@ -11,6 +11,6 @@
     name: 'App',
     components: {
       HelloWorld,
-    },
+    }
   }
 </script>

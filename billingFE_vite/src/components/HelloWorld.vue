@@ -33,7 +33,7 @@
           })
           .catch((err) => {})
       },
-    },
+    }
   }
 </script>
 <style lang="scss">

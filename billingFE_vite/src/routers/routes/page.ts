@@ -6,7 +6,7 @@ const page = [
     path: '/',
     redirect: 'app',
     component: () => App,
-  },
+  }
 ]
 
 export default page

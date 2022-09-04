@@ -14,7 +14,7 @@ const message = {
   en: {
     ...EN,
     ...elementEnLocale,
-  },
+  }
 }
 
 const i18n = createI18n({
