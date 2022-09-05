@@ -91,9 +91,13 @@
   </div>
 </template>
 <style lang="scss">
-  .box-card{
+  .box-card {
     min-height: 100vh;
-    background-image: linear-gradient(to left, rgb(149, 154, 245), rgb(71, 71, 245));
+    background-image: linear-gradient(
+      to left,
+      rgb(149, 154, 245),
+      rgb(71, 71, 245)
+    );
     .card {
       position: absolute;
       top: 50%;
