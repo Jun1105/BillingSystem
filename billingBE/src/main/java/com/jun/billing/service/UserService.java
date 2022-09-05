@@ -5,6 +5,6 @@ import com.jun.billing.pojo.User;
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAllUser();
-    public User getUser(String username, String password);
+    List<User> getAllUser();
+    User getUser(String username, String password);
 }

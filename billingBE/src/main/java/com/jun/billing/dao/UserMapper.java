@@ -1,5 +1,6 @@
 package com.jun.billing.dao;
 
+import com.jun.billing.pojo.Menu;
 import com.jun.billing.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,4 +14,6 @@ public interface UserMapper {
 
     @Select("select * from user where username = #{username} and password = #{password}")
     User getUser(@Param("username") String username, @Param("password") String password);
+
+    List<Menu> getMenu(@Param("userId") Integer userId);
 }

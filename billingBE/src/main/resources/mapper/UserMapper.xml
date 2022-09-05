@@ -4,4 +4,10 @@
     <select id="getAllUser" resultType="com.jun.billing.pojo.User">
         select * from user
     </select>
+
+    <select id="getMenu" parameterType="java.lang.Integer" resultType="com.jun.billing.pojo.Menu">
+        SELECT id, pid, title,menu_name,url
+        FROM menu, role_menu
+        WHERE menu.id = role_menu.menu_id and role_menu.role_id = #{userId}
+    </select>
 </mapper>
