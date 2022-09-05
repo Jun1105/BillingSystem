@@ -26,4 +26,8 @@ export const userStore = defineStore('user', {
       this.userName = null
     }
   }
+  // // 开启数据缓存
+  // persist: {
+  //   enabled: true
+  // }
 })

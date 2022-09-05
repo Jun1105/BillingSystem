@@ -9,9 +9,11 @@ import './index.css'
 import router from './routers'
 import i18n from './i18n'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import piniaPluginPersist from 'pinia-plugin-persist'
 
 const app = createApp(App)
 const pinia = createPinia()
+pinia.use(piniaPluginPersist)
 
 app.use(ElementPlus, { i18n: (key, value) => i18n.t(key, value) })
 app.use(router)
