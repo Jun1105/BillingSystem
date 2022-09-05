@@ -9,7 +9,7 @@ const page = [
       {
         path: '/app',
         name: 'App',
-        component: () => App
+        component: async () => await App
       }
     ]
   },
