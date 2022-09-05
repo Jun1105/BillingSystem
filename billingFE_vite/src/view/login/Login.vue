@@ -63,7 +63,7 @@
 </script>
 <template>
   <div class="box-card">
-    <el-card shadow="always">
+    <el-card class="card" shadow="always">
       <template #header>
         <h3>Welecom to Billing System!</h3>
       </template>
@@ -91,8 +91,15 @@
   </div>
 </template>
 <style lang="scss">
-  .box-card {
-    width: 30%;
-    margin: 0 auto;
+  .box-card{
+    min-height: 100vh;
+    background-image: linear-gradient(to left, rgb(149, 154, 245), rgb(71, 71, 245));
+    .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30%;
+    }
   }
 </style>
