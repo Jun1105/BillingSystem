@@ -2,9 +2,18 @@
 
 import { defineStore } from 'pinia'
 
+import 'pinia'
+
+declare module 'pinia' {
+  export interface DefineStoreOptionsBase<S, Store> {
+    persist?: any
+  }
+}
+
 // useStore 可以是 useUser、useCart 之类的任何东西
 // 第一个参数是应用程序中 store 的唯一 id
-export const userStore = defineStore('user', {
+export const userStore = defineStore({
+  id: 'user',
   // other options...
   state: () => {
     return {
@@ -22,12 +31,13 @@ export const userStore = defineStore('user', {
       this.userName = userName
     },
     removeUser() {
-      this.userId = null
-      this.userName = null
+      // this.userId = null
+      // this.userName = null
+      window.sessionStorage.removeItem('user')
     }
-  }
+  },
   // // 开启数据缓存
-  // persist: {
-  //   enabled: true
-  // }
+  persist: {
+    enabled: true
+  }
 })

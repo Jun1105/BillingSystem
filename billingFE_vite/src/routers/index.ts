@@ -14,11 +14,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const store = userStore()
+  const user = userStore()
   // ...
   // 返回 false 以取消导航
   // return false
-  if (store.userId) {
+  if (user.userId) {
     next()
   } else {
     if (to.path === '/login') {
