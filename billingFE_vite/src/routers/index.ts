@@ -13,18 +13,18 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(to => {
   const user = userStore()
   // ...
   // 返回 false 以取消导航
   // return false
   if (user.userId) {
-    next()
+    return true
   } else {
     if (to.path === '/login') {
-      next()
+      return true
     } else {
-      next('/login')
+      return { path: '/login' }
     }
   }
 })

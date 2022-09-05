@@ -36,6 +36,7 @@ module.exports = {
     'no-const-assign': 2, //禁止修改const声明变量
     'comma-dangle': 2, // 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号
     'vue/multi-word-component-names': 0, //关闭驼峰命名规则
+    'arrow-parens': ['error', 'as-needed'], //箭头函数括号规则
     'comma-spacing': [2, { before: false, after: true }] // 控制逗号前后的空格
   }
 }

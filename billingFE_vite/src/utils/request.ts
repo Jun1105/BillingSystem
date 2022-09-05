@@ -21,19 +21,19 @@ service.interceptors.request.use(
     }
     return config
   },
-  (error) => {
+  error => {
     return Promise.reject(error)
   }
 )
 
 // 请求结果
 service.interceptors.response.use(
-  (response) => {
+  response => {
     //返回数据
     const res = response.data
     return res
   },
-  (error) => {
+  error => {
     return Promise.reject(error)
   }
 )

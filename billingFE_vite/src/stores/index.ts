@@ -22,8 +22,8 @@ export const userStore = defineStore({
     }
   },
   getters: {
-    getUserId: (state) => state.userId,
-    getUserName: (state) => state.userName
+    getUserId: state => state.userId,
+    getUserName: state => state.userName
   },
   actions: {
     settingUser(userId: string, userName: string) {

@@ -1,12 +1,7 @@
 <!-- @format -->
 
 <script setup lang="ts">
-  import {
-    Document,
-    Menu as IconMenu,
-    Location,
-    Setting
-  } from '@element-plus/icons-vue'
+  import { Menu as IconMenu } from '@element-plus/icons-vue'
   const routerMenu = [
     {
       title: '用户功能',
@@ -14,12 +9,7 @@
       children: [
         {
           path: '/billing',
-          title: '记账',
-          menu_icon: ''
-        },
-        {
-          path: '/billing',
-          title: '记账',
+          title: '账单',
           menu_icon: ''
         }
       ]
@@ -32,6 +22,16 @@
           path: '/addUser',
           title: '添加用户',
           menu_icon: ''
+        },
+        {
+          path: '/addRouter',
+          title: '添加路由',
+          menu_icon: ''
+        },
+        {
+          path: '/addList',
+          title: '数据字典',
+          menu_icon: ''
         }
       ]
     }
@@ -41,7 +41,7 @@
   <el-scrollbar>
     <el-row class="tac">
       <el-col>
-        <h5 class="mb-2">Default colors</h5>
+        <h5 class="mb-2">Billing System</h5>
         <el-menu default-active="2" class="el-menu-vertical-demo" router>
           <el-menu-item index="0" :route="{ path: '/' }">
             <el-icon>
@@ -49,22 +49,24 @@
             </el-icon>
             <span>首页</span>
           </el-menu-item>
-          <el-sub-menu v-for="(item, index) in routerMenu" :index="index">
+          <el-sub-menu
+            v-for="(item, index) in routerMenu"
+            :key="index"
+            :index="index + ''"
+          >
             <template #title>
               <el-icon>
-                <location />
+                <icon-menu />
               </el-icon>
               <span>{{ item.title }}</span>
             </template>
             <template v-if="item.children">
               <el-menu-item
                 v-for="(ite, i) in item.children"
+                :key="`${index}-${i}`"
                 :index="`${index}-${i}`"
                 :route="ite.path"
               >
-                <el-icon>
-                  <icon-menu />
-                </el-icon>
                 <span>{{ ite.title }}</span>
               </el-menu-item>
             </template>

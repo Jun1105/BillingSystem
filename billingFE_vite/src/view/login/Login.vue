@@ -31,7 +31,7 @@
         if (!formEl) return
         await formEl.validate((valid, fields) => {
           if (valid) {
-            login(ruleForm).then((value) => {
+            login(ruleForm).then(value => {
               const { data } = value
               if (data) {
                 user.settingUser(data.id, data.username)
