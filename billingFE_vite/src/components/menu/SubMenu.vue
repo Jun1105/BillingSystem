@@ -5,10 +5,10 @@
   const routerMenu = [
     {
       title: '用户功能',
-      name: '',
+      name: '用户功能',
       children: [
         {
-          path: '/billing',
+          path: '/app/billing',
           title: '账单',
           menu_icon: ''
         }
@@ -16,20 +16,20 @@
     },
     {
       title: '系统功能',
-      name: '',
+      name: '系统功能',
       children: [
         {
-          path: '/addUser',
+          path: '/app/addUser',
           title: '添加用户',
           menu_icon: ''
         },
         {
-          path: '/addRouter',
+          path: '/app/addRouter',
           title: '添加路由',
           menu_icon: ''
         },
         {
-          path: '/addList',
+          path: '/app/dataList',
           title: '数据字典',
           menu_icon: ''
         }
@@ -43,7 +43,7 @@
       <el-col>
         <h5 class="mb-2">Billing System</h5>
         <el-menu default-active="2" class="el-menu-vertical-demo" router>
-          <el-menu-item index="0" :route="{ path: '/' }">
+          <el-menu-item index="0" :route="{ path: '/app' }">
             <el-icon>
               <House />
             </el-icon>

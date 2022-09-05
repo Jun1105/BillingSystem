@@ -6,23 +6,23 @@ import page from './routes/page'
 import { userStore } from '@/stores'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const routes: any = [...page, login]
+const routes: any = [login, ...page]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
-router.beforeEach(to => {
+router.beforeEach((to, from, next) => {
   const user = userStore()
   // ...
   // 返回 false 以取消导航
   // return false
   if (user.userId) {
-    return true
+    next()
   } else {
     if (to.path === '/login') {
-      return true
+      next()
     } else {
       return { path: '/login' }
     }

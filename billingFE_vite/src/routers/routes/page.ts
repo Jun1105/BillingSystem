@@ -1,17 +1,18 @@
 /** @format */
 
 import App from '@/view/app'
+import menu from './menu'
+
 const page = [
   {
     path: '/',
-    redirect: 'app',
-    children: [
-      {
-        path: '/app',
-        name: 'App',
-        component: async () => await App
-      }
-    ]
+    redirect: 'app'
+  },
+  {
+    path: '/app',
+    name: 'app',
+    component: async () => await App,
+    children: [...menu]
   },
   {
     path: '/404',
