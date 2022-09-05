@@ -1,7 +1,6 @@
 /** @format */
 
 import App from '@/view/app'
-import menu from './menu'
 
 const page = [
   {
@@ -11,8 +10,7 @@ const page = [
   {
     path: '/app',
     name: 'app',
-    component: async () => await App,
-    children: [...menu]
+    component: async () => await App
   },
   {
     path: '/404',

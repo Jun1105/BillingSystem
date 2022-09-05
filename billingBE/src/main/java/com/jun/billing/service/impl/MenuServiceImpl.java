@@ -24,14 +24,15 @@ public class MenuServiceImpl implements MenuService {
         List<MenuDto> menuList = new ArrayList<>();
         menus.stream().forEach(o-> {
             if(o.getPid() == 0){
-                MenuDto menuDto = new MenuDto(o.getId(),o.getTitle(),o.getMenu_name(), null);
+                List<Menu> children = new ArrayList<>();
+                MenuDto menuDto = new MenuDto(o.getId(),o.getTitle(),o.getMenu_name(), children);
                 menuList.add(menuDto);
             }else return;
         });
         for (int i = 0;i < menuList.size();i++){
             for (int j = 0;j < menus.size();j++){
                 if(menuList.get(i).getId() == menus.get(j).getPid()){
-                    menuList.get(i).setChildren(menus.get(j));
+                    menuList.get(i).getChildren().add(menus.get(j));
                 }
             }
         }
