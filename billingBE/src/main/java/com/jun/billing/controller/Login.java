@@ -21,7 +21,6 @@ public class Login {
 
     @PostMapping("/login")
     public Result getUser(@RequestBody User user){
-        System.out.println(user.getUsername()+user.getPassword());
-        return Result.success("success", userService.getUser(user.getUsername(), user.getPassword()));
+        return Result.success("success",userService.getUser(user.getUsername(), user.getPassword()));
     }
 }
