@@ -4,7 +4,8 @@ import Login from '@/view/login'
 
 const login = {
   path: '/login',
-  component: () => Login
+  name: 'Login',
+  component: async () => await Login
 }
 
 export default login

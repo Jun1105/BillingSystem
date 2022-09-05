@@ -4,8 +4,12 @@
   import { defineComponent, reactive, ref } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
   import { login } from '@/api/login'
+  import { userStore } from '@/stores'
+  import { useRouter } from 'vue-router'
   export default defineComponent({
     setup() {
+      const user = userStore()
+      const router = useRouter()
       const formRef = ref<FormInstance>()
       const ruleForm = reactive({
         username: '',
@@ -27,9 +31,15 @@
         if (!formEl) return
         await formEl.validate((valid, fields) => {
           if (valid) {
-            console.log(ruleForm)
-            login(ruleForm)
-            console.log('submit!')
+            login(ruleForm).then((value) => {
+              const {data} = value
+              if (data) {
+                user.settingUser(data.id, data.username)
+                router.push('/')
+              }else {
+                formEl.resetFields()
+              }
+            })
           } else {
             console.log('error submit!', fields)
           }

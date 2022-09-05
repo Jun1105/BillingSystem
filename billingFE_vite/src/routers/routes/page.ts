@@ -5,7 +5,13 @@ const page = [
   {
     path: '/',
     redirect: 'app',
-    component: () => App
+    children: [
+      {
+        path: '/app',
+        name: 'App',
+        component: () => App
+      }
+    ]
   }
 ]
 
