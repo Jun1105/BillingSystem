@@ -12,6 +12,14 @@ const page = [
         component: () => App
       }
     ]
+  },
+  {
+    path: '/404',
+    component: () => import('@/view/error/404.vue')
+  },
+  {
+    path: '/:pathMatch(.*)',
+    redirect: '/404'
   }
 ]
 
