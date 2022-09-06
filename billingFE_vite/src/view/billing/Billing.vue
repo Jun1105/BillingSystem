@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue'
-  import { Search } from '@element-plus/icons-vue'
+  import { Search, Edit, Delete } from '@element-plus/icons-vue'
   import Table from '@/components/table'
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  import DialogFormVue from './component/DialogForm.vue'
   const order = reactive({
     type: null,
     description: null,
@@ -15,32 +17,59 @@
     }
   ])
 
+  const total = ref(5)
+
   const tableData = ref([
     {
-      date: '2016-05-03',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles'
+      type: '餐饮',
+      description: '吃饭',
+      amount: 180,
+      date: '2016-05-03'
     },
     {
-      date: '2016-05-02',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles'
+      type: '餐饮',
+      description: '吃饭',
+      amount: 180,
+      date: '2016-05-03'
+    },
+    {
+      type: '餐饮',
+      description: '吃饭',
+      amount: 180,
+      date: '2016-05-03'
+    },
+    {
+      type: '餐饮',
+      description: '吃饭',
+      amount: 180,
+      date: '2016-05-03'
+    },
+    {
+      type: '餐饮1',
+      description: '吃饭1',
+      amount: 222,
+      date: '2016-05-03'
     }
   ])
   const tableColumn = ref([
     {
+      prop: 'type',
+      label: '类型'
+    },
+    {
+      prop: 'description',
+      label: '描述'
+    },
+    {
+      prop: 'amount',
+      label: '金额'
+    },
+    {
       prop: 'date',
-      label: 'Date'
-    },
-    {
-      prop: 'name',
-      label: 'Name'
-    },
-    {
-      prop: 'address',
-      label: 'Address'
+      label: '时间'
     }
   ])
+  let isClick = ref(true)
 
   const disabledDate = (time: Date) => {
     return time.getTime() > Date.now()
@@ -53,8 +82,55 @@
   const handleCurrentChange = (val: number) => {
     console.log(`current page: ${val}`)
   }
+
+  const currentRow = ref()
+  const saveRow = ref()
+  const handleCurrentRowChange = val => {
+    isClick.value = false
+    currentRow.value = val
+    saveRow.value = val
+    ElMessage({
+      message: '已选中当前数据,可进行操作',
+      type: 'success'
+    })
+    console.log(val)
+  }
   const handleSizeChange = (val: number) => {
     console.log(`${val} items per page`)
+  }
+
+  const dialogFormVisible = ref(false)
+  const handleCloseDialog = value => {
+    dialogFormVisible.value = value
+  }
+
+  const handleUpdate = () => {
+    dialogFormVisible.value = true
+    currentRow.value = { ...saveRow.value }
+  }
+  const handleAdd = () => {
+    dialogFormVisible.value = true
+    currentRow.value = {}
+  }
+  const handleDelete = () => {
+    ElMessageBox.confirm('确认要删除吗?', 'Warning', {
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+      type: 'warning'
+    })
+      .then(() => {
+        console.log(currentRow.value)
+        ElMessage({
+          type: 'success',
+          message: 'Delete completed'
+        })
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'info',
+          message: 'Delete canceled'
+        })
+      })
   }
 </script>
 <template>
@@ -102,31 +178,55 @@
               type="date"
               placeholder="Pick a day"
               :disabled-date="disabledDate"
+              value-format="YYYY-MM-DD"
             />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row justify="end">
-        <el-col :span="4">
-          <el-button type="success">
+        <el-col :span="6">
+          <el-button type="primary" :icon="Search" @click="searchForm">
+            搜索
+          </el-button>
+          <el-button type="success" @click="handleAdd">
             <el-icon><CirclePlus /></el-icon>
             添加
           </el-button>
-          <el-button type="primary" :icon="Search" @click="searchForm">
-            搜索
+          <el-button
+            type="success"
+            :icon="Edit"
+            :disabled="isClick"
+            @click="handleUpdate"
+          >
+            修改
+          </el-button>
+          <el-button
+            type="danger"
+            :icon="Delete"
+            :disabled="isClick"
+            @click="handleDelete"
+          >
+            删除
           </el-button>
         </el-col>
       </el-row>
     </el-form>
   </el-card>
-  <el-card margin="1">
+  <el-card :style="{ marginTop: '20px' }">
     <Table
       :table-data="tableData"
       :table-column="tableColumn"
-      :total="5"
+      :total="total"
       :handle-current-change="handleCurrentChange"
       :handle-size-change="handleSizeChange"
-    ></Table>
+      :handle-current-row-change="handleCurrentRowChange"
+    />
   </el-card>
+  <DialogFormVue
+    :dialog-form-visible="dialogFormVisible"
+    @close-dialog="handleCloseDialog"
+    :current-row="currentRow"
+    :type-list="typeList"
+  />
 </template>
 <style lang="scss"></style>

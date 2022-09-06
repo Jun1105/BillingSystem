@@ -8,6 +8,7 @@
     total: number
     handleSortChange?: any
     handleCurrentChange?: any
+    handleCurrentRowChange?: any
     handleSizeChange?: any
   }
   const props = defineProps<Props>()
@@ -18,10 +19,12 @@
 <template>
   <el-table
     :data="props.tableData"
+    highlight-current-row
     stripe
     style="width: 100%"
     max-height="800"
     @sort-change="props.handleSortChange"
+    @current-change="props.handleCurrentRowChange"
   >
     <template v-for="(item, index) in props.tableColumn" :key="index">
       <el-table-column
@@ -37,7 +40,7 @@
   <el-pagination
     v-model:currentPage="currentPage4"
     v-model:page-size="pageSize4"
-    :page-sizes="[20, 40, 60, 100]"
+    :page-sizes="[5, 10, 20, 50]"
     layout="total, sizes, prev, pager, next, jumper"
     :total="props.total"
     @size-change="props.handleSizeChange"
