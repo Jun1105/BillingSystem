@@ -4,7 +4,7 @@ const mentRouter = [
     name: 'billing',
     title: '账单',
     menu_icon: '',
-    component: () => import('@/view/order/Order.vue')
+    component: () => import('@/view/billing/Billing.vue')
   },
   {
     path: '/app/addUser',
