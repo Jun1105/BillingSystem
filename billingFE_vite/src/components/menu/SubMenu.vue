@@ -35,6 +35,7 @@
                 :key="`${index}-${i}`"
                 :index="`${index}-${i}`"
                 :route="ite.url"
+                class="el-menu-item-demo"
               >
                 <span>{{ ite.title }}</span>
               </el-menu-item>
@@ -45,4 +46,8 @@
     </el-row>
   </el-scrollbar>
 </template>
-<style lang="scss"></style>
+<style lang="scss">
+  .el-menu-vertical-demo {
+    border-right: none;
+  }
+</style>
