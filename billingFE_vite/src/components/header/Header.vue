@@ -13,10 +13,10 @@
 <template>
   <el-row class="el-row-header" :gutter="20">
     <el-col class="el-row-left" :span="4"></el-col>
-    <el-col class="el-row-middle" :span="18">
+    <el-col class="el-row-middle" :span="17">
       <span>Hello {{ user.$state.userName }}, Welecom to BillingSystem!</span>
     </el-col>
-    <el-col :span="2">
+    <el-col :span="3">
       <el-row class="el-row-right">
         <el-col :span="8"></el-col>
         <el-col :span="8">
@@ -53,6 +53,7 @@
 </template>
 <style lang="scss">
   .el-row-header {
+    text-align: center;
     height: 100%;
     .el-row-middle {
       line-height: 8vh;

@@ -47,7 +47,11 @@
   </el-scrollbar>
 </template>
 <style lang="scss">
+  .mb-2 {
+    text-align: center;
+  }
   .el-menu-vertical-demo {
     border-right: none;
+    border-top: 1px solid #ccc;
   }
 </style>
