@@ -7,6 +7,7 @@ import { userStore } from '@/stores/user'
 import { useMenuStore } from '@/stores/menu'
 import { getMenu } from '@/api/common'
 import menu from './routes/menu'
+import loading from '@/utils/loading'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const routes: any = [login, ...page]
@@ -22,8 +23,11 @@ router.beforeEach(async (to, from, next) => {
   // ...
   // 返回 false 以取消导航
   // return false
+
   if (user.userId && to.path !== '/login') {
+    loading(true)
     const { data } = await getMenu(user.userId)
+    loading(false)
     if (data) {
       useMenu.settingMenu(data)
       const menuList = data.reduce((acc, item) => {
