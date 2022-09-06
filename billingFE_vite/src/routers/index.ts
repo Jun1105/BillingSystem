@@ -36,7 +36,10 @@ router.beforeEach(async (to, from, next) => {
       newMenu.forEach(v => {
         router.addRoute('app', v)
       })
-      // router.addRoute(error404)
+      router.addRoute(error404)
+    }
+    if (to.matched.length === 0) {
+      router.push(to.path)
     }
     next()
   } else {

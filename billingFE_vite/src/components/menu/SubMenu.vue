@@ -11,7 +11,7 @@
     <el-row class="tac">
       <el-col>
         <h5 class="mb-2">Billing System</h5>
-        <el-menu default-active="2" class="el-menu-vertical-demo" router>
+        <el-menu class="el-menu-vertical-demo" router>
           <el-menu-item index="0" :route="{ path: '/app' }">
             <el-icon>
               <House />
