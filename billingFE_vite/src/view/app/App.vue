@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import SubMenu from '@/components/menu/SubMenu.vue'
+  import SubMenu from '@/components/menu'
 </script>
 
 <style lang="scss">

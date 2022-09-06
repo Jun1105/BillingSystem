@@ -6,6 +6,7 @@
   import { login } from '@/api/login'
   import { userStore } from '@/stores/user'
   import { useRouter } from 'vue-router'
+  import loading from '@/utils/loading'
   export default defineComponent({
     setup() {
       const user = userStore()
@@ -31,15 +32,20 @@
         if (!formEl) return
         await formEl.validate((valid, fields) => {
           if (valid) {
-            login(ruleForm).then(value => {
-              const { data } = value
-              if (data) {
-                user.settingUser(data.id, data.username)
-                router.push('/')
-              } else {
-                formEl.resetFields()
-              }
-            })
+            loading(true)
+            login(ruleForm)
+              .then(value => {
+                const { data } = value
+                if (data) {
+                  user.settingUser(data.id, data.username)
+                  router.push('/')
+                } else {
+                  formEl.resetFields()
+                }
+              })
+              .finally(() => {
+                loading(false)
+              })
           } else {
             console.log('error submit!', fields)
           }
