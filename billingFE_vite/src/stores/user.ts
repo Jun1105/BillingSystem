@@ -5,7 +5,9 @@ import { defineStore } from 'pinia'
 import 'pinia'
 
 declare module 'pinia' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   export interface DefineStoreOptionsBase<S, Store> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     persist?: any
   }
 }

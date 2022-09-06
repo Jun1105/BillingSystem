@@ -4,7 +4,7 @@
   import { defineComponent, reactive, ref } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
   import { login } from '@/api/login'
-  import { userStore } from '@/stores'
+  import { userStore } from '@/stores/user'
   import { useRouter } from 'vue-router'
   export default defineComponent({
     setup() {

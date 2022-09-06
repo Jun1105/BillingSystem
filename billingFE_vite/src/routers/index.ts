@@ -2,8 +2,9 @@
 
 import { createRouter, createWebHistory } from 'vue-router'
 import login from './routes/login'
-import page from './routes/page'
-import { userStore } from '@/stores'
+import page, { error404 } from './routes/page'
+import { userStore } from '@/stores/user'
+import { useMenuStore } from '@/stores/menu'
 import { getMenu } from '@/api/common'
 import menu from './routes/menu'
 
@@ -15,37 +16,35 @@ const router = createRouter({
   routes
 })
 
-getMenu(1)
-  .then(value => {
-    const { data } = value
-    const menuList = data.reduce((acc, item) => {
-      return acc.concat(item.children)
-    }, [])
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newPage: any = page
-
-    const newMenu = menu.filter(item => menuList.find(i => i.url === item.path))
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    newPage.forEach((item: any) => {
-      if (item.path === '/app') {
-        item.children = newMenu
-      }
-    })
-    router.addRoute(newPage)
-  })
-  .catch(err => {
-    console.log(err)
-  })
-
-router.beforeEach(to => {
+router.beforeEach(async (to, from, next) => {
   const user = userStore()
+  const useMenu = useMenuStore()
   // ...
   // 返回 false 以取消导航
   // return false
-  if (!user.userId && to.path !== '/login') {
-    return { path: '/login' }
+  if (user.userId && to.path !== '/login') {
+    const { data } = await getMenu(user.userId)
+    if (data) {
+      useMenu.settingMenu(data)
+      const menuList = data.reduce((acc, item) => {
+        return acc.concat(item.children)
+      }, [])
+
+      const newMenu = menu.filter(item =>
+        menuList.find(i => i.url === item.path)
+      )
+      newMenu.forEach(v => {
+        router.addRoute('app', v)
+      })
+      // router.addRoute(error404)
+    }
+    next()
   } else {
-    return true
+    if (to.path !== '/login') {
+      next('/login')
+    } else {
+      next()
+    }
   }
 })
 

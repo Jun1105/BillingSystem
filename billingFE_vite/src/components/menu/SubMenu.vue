@@ -2,40 +2,9 @@
 
 <script setup lang="ts">
   import { Menu as IconMenu } from '@element-plus/icons-vue'
-  const routerMenu = [
-    {
-      title: '用户功能',
-      name: '用户功能',
-      children: [
-        {
-          path: '/app/billing',
-          title: '账单',
-          menu_icon: ''
-        }
-      ]
-    },
-    {
-      title: '系统功能',
-      name: '系统功能',
-      children: [
-        {
-          path: '/app/addUser',
-          title: '添加用户',
-          menu_icon: ''
-        },
-        {
-          path: '/app/addRouter',
-          title: '添加路由',
-          menu_icon: ''
-        },
-        {
-          path: '/app/dataList',
-          title: '数据字典',
-          menu_icon: ''
-        }
-      ]
-    }
-  ]
+  import { useMenuStore } from '@/stores/menu'
+  const useMenu = useMenuStore()
+  const menuList = useMenu.menuList
 </script>
 <template>
   <el-scrollbar>
@@ -50,7 +19,7 @@
             <span>首页</span>
           </el-menu-item>
           <el-sub-menu
-            v-for="(item, index) in routerMenu"
+            v-for="(item, index) in menuList"
             :key="index"
             :index="index + ''"
           >
@@ -65,7 +34,7 @@
                 v-for="(ite, i) in item.children"
                 :key="`${index}-${i}`"
                 :index="`${index}-${i}`"
-                :route="ite.path"
+                :route="ite.url"
               >
                 <span>{{ ite.title }}</span>
               </el-menu-item>
