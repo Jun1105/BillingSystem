@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <script lang="ts">
   import { defineComponent, reactive, ref } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
@@ -84,7 +82,12 @@
           <el-input v-model="ruleForm.username" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" show-password v-model="ruleForm.password" />
+          <el-input
+            type="password"
+            show-password
+            v-model="ruleForm.password"
+            @keyup.enter="submitForm(formRef)"
+          />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm(formRef)">
