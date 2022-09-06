@@ -27,7 +27,7 @@
     .un_header {
       height: 92vh;
       .aside {
-        width: 10vw;
+        width: 12vw;
         box-shadow: 6px 0 5px -5px rgba(0, 0, 0, 0.1);
       }
       .main {
