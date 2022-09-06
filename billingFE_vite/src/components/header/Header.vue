@@ -14,7 +14,7 @@
   <el-row class="el-row-header" :gutter="20">
     <el-col class="el-row-left" :span="4"></el-col>
     <el-col class="el-row-middle" :span="18">
-      <span>Welecom to BillingSystem!</span>
+      <span>Hello {{ user.$state.userName }}, Welecom to BillingSystem!</span>
     </el-col>
     <el-col :span="2">
       <el-row class="el-row-right">
