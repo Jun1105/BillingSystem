@@ -33,7 +33,7 @@
   const formRef = ref<FormInstance>()
 
   const rules = reactive<FormRules>({
-    type: [{ required: true, message: 'Please input type', trigger: 'blur' }],
+    typeId: [{ required: true, message: 'Please input type', trigger: 'blur' }],
     amount: [
       { required: true, message: 'Please input amount', trigger: 'blur' }
     ],
@@ -77,8 +77,8 @@
 <template>
   <el-dialog :model-value="props.dialogFormVisible" title="Shipping address">
     <el-form ref="formRef" :model="form" :rules="rules">
-      <el-form-item label="类型：" prop="type">
-        <el-select v-model="form.type" placeholder="please select type">
+      <el-form-item label="类型：" prop="typeId">
+        <el-select v-model="form.typeId" placeholder="please select type">
           <el-option
             v-for="item in props.typeList"
             :key="item.value"
