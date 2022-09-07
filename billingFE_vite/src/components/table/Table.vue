@@ -13,8 +13,8 @@
   }
   const props = defineProps<Props>()
 
-  const currentPage4 = ref(1)
-  const pageSize4 = ref(5)
+  const currentPage = ref(1)
+  const pageSize = ref(10)
 </script>
 <template>
   <el-table
@@ -32,18 +32,18 @@
         :label="item.label"
         :width="item.width"
         :min-width="item.width"
-        :sortable="item.sort || false"
+        :sortable="item.sort"
         :formatter="item.formatter"
       />
     </template>
   </el-table>
   <el-pagination
-    v-model:currentPage="currentPage4"
-    v-model:page-size="pageSize4"
-    :page-sizes="[5, 10, 20, 50]"
+    v-model:currentPage="currentPage"
+    v-model:page-size="pageSize"
+    :page-sizes="[10, 20, 40, 100]"
     layout="total, sizes, prev, pager, next, jumper"
     :total="props.total"
-    @size-change="props.handleSizeChange"
-    @current-change="props.handleCurrentChange"
+    @size-change="props.handleSizeChange(currentPage, pageSize)"
+    @current-change="props.handleCurrentChange(currentPage, pageSize)"
   />
 </template>

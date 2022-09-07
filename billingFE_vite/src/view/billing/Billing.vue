@@ -1,11 +1,14 @@
 <script setup lang="ts">
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import { Search, Edit, Delete } from '@element-plus/icons-vue'
   import Table from '@/components/table'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import DialogFormVue from './component/DialogForm.vue'
+  import { getAllOrder } from '@/api/order'
+  import { userStore } from '@/stores/user'
+  const user = userStore()
   const order = reactive({
-    type: null,
+    typeId: null,
     description: null,
     amount: 0,
     date: null
@@ -18,42 +21,15 @@
   ])
 
   const total = ref(5)
-
-  const tableData = ref([
-    {
-      type: '餐饮',
-      description: '吃饭',
-      amount: 180,
-      date: '2016-05-03'
-    },
-    {
-      type: '餐饮',
-      description: '吃饭',
-      amount: 180,
-      date: '2016-05-03'
-    },
-    {
-      type: '餐饮',
-      description: '吃饭',
-      amount: 180,
-      date: '2016-05-03'
-    },
-    {
-      type: '餐饮',
-      description: '吃饭',
-      amount: 180,
-      date: '2016-05-03'
-    },
-    {
-      type: '餐饮1',
-      description: '吃饭1',
-      amount: 222,
-      date: '2016-05-03'
-    }
-  ])
+  const tableData = ref([])
   const tableColumn = ref([
     {
-      prop: 'type',
+      prop: 'index',
+      label: '',
+      width: '50'
+    },
+    {
+      prop: 'typeName',
       label: '类型'
     },
     {
@@ -62,13 +38,30 @@
     },
     {
       prop: 'amount',
-      label: '金额'
+      label: '金额',
+      sort: true
     },
     {
       prop: 'date',
-      label: '时间'
+      label: '时间',
+      sort: true
     }
   ])
+
+  const getOrderData = async body => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const res: any = await getAllOrder(body)
+    if (res.code === 0) {
+      tableData.value = res.data.map((item, index) => {
+        return { index: index + 1, ...item }
+      })
+      total.value = res.data.length
+    }
+  }
+
+  onMounted(() => {
+    getOrderData({ userId: user.$state.userId })
+  })
   let isClick = ref(true)
 
   const disabledDate = (time: Date) => {
@@ -76,11 +69,34 @@
   }
 
   const searchForm = () => {
-    console.log(order)
+    getOrderData({
+      userId: user.$state.userId,
+      ...order
+    })
   }
 
-  const handleCurrentChange = (val: number) => {
-    console.log(`current page: ${val}`)
+  const handleCurrentChange = async (currentPage, pageSize) => {
+    getOrderData({
+      userId: user.$state.userId,
+      page: currentPage,
+      size: pageSize
+    })
+  }
+
+  const handleSizeChange = (currentPage, size) => {
+    getOrderData({
+      userId: user.$state.userId,
+      page: currentPage,
+      size: size
+    })
+  }
+
+  const handleSortChange = ({ prop, order }) => {
+    getOrderData({
+      userId: user.$state.userId,
+      orderBy: prop,
+      sort: order === 'ascending'
+    })
   }
 
   const currentRow = ref()
@@ -94,9 +110,6 @@
       type: 'success'
     })
     console.log(val)
-  }
-  const handleSizeChange = (val: number) => {
-    console.log(`${val} items per page`)
   }
 
   const dialogFormVisible = ref(false)
@@ -139,7 +152,7 @@
       <el-row :gutter="20">
         <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="类型：">
-            <el-select v-model="order.type" placeholder="please select type">
+            <el-select v-model="order.typeId" placeholder="please select type">
               <el-option
                 v-for="item in typeList"
                 :key="item.value"
@@ -220,6 +233,7 @@
       :handle-current-change="handleCurrentChange"
       :handle-size-change="handleSizeChange"
       :handle-current-row-change="handleCurrentRowChange"
+      :handle-sort-change="handleSortChange"
     />
   </el-card>
   <DialogFormVue
