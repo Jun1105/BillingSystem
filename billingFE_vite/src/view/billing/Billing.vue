@@ -197,7 +197,7 @@
         </el-col>
       </el-row>
       <el-row justify="end">
-        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
+        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="6">
           <el-button type="primary" :icon="Search" @click="searchForm">
             搜索
           </el-button>
