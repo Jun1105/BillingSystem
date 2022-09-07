@@ -30,7 +30,7 @@
             and uorder.type_id = #{req.typeId}
         </if>
         <if test="req.description !=null and req.description !=''">
-            and uorder.description = #{req.description}
+            and uorder.description like concat('%',#{req.description,jdbcType=VARCHAR},'%')
         </if>
         <if test="req.amount !=null and req.amount !=''">
             and uorder.amount = #{req.amount}
@@ -49,4 +49,28 @@
         </choose>
             LIMIT #{req.page},#{req.size}
     </select>
+    <insert id="insertOrder" parameterType="com.jun.billing.entity.pojo.Order" useGeneratedKeys="true" keyProperty="orderId">
+        insert into user_order(user_id, type_id, description, amount, `date`)
+        values (
+                #{req.userId},
+                #{req.typeId},
+                #{req.description},
+                #{req.amount},
+                #{req.date}
+               )
+    </insert>
+    <update id="updateOrder" parameterType="com.jun.billing.entity.pojo.Order">
+        update user_order
+        set
+            type_id = #{req.typeId},
+            description = #{req.description},
+            amount = #{req.amount},
+            `date` = #{req.date}
+        where
+            user_id = #{req.userId}
+            and id = #{req.orderId}
+    </update>
+    <delete id="deleteOrder" parameterType="java.lang.Integer">
+        delete from user_order where id = #{orderId}
+    </delete>
 </mapper>

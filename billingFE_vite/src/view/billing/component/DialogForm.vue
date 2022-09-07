@@ -4,11 +4,15 @@
   import { T } from 'unimport/dist/types-43c63a16'
   import { reactive, ref, watch } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
+  import { addOrder, updateOrder } from '@/api/order'
+  import { userStore } from '@/stores/user'
+  const user = userStore()
 
   interface Props {
     dialogFormVisible: boolean
     typeList: Array<T>
     currentRow?: any
+    action: string
   }
 
   const props = defineProps<Props>()
@@ -63,11 +67,30 @@
 
   const handleConfirm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate((valid, fields) => {
+    await formEl.validate(async (valid, fields) => {
       if (valid) {
-        console.log(form.value)
-        clearForm()
-        $emit('closeDialog', false)
+        let isResult = false
+        if (props.action === 'add') {
+          const res: any = await addOrder({
+            userId: user.$state.userId,
+            ...form.value
+          })
+          if (res.code === 0) {
+            isResult = true
+          }
+        } else if (props.action === 'update') {
+          const res: any = await updateOrder({
+            userId: user.$state.userId,
+            ...form.value
+          })
+          if (res.code === 0) {
+            isResult = true
+          }
+        }
+        if (isResult) {
+          clearForm()
+          $emit('closeDialog', false, 'confirm')
+        }
       } else {
         console.log('error submit!', fields)
       }

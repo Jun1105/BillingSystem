@@ -10,4 +10,10 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
     List<Order> getUserAllOrder(@Param("req") OrderRequest req);
+
+    Integer insertOrder(@Param("req") Order req);
+
+    void updateOrder(@Param("req") Order req);
+
+    void deleteOrder(@Param("orderId") Integer orderId);
 }

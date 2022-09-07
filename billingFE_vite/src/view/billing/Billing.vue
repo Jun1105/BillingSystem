@@ -123,26 +123,36 @@
   const currentRow = ref()
   const saveRow = ref()
   const handleCurrentRowChange = val => {
-    isClick.value = false
-    currentRow.value = val
-    saveRow.value = val
-    ElMessage({
-      message: '已选中当前数据,可进行操作',
-      type: 'success'
-    })
-    console.log(val)
+    if (!val) {
+      isClick.value = true
+    } else {
+      isClick.value = false
+      currentRow.value = val
+      saveRow.value = val
+      ElMessage({
+        message: '已选中当前数据,可进行操作',
+        type: 'success'
+      })
+    }
   }
 
   const dialogFormVisible = ref(false)
-  const handleCloseDialog = value => {
+  const action = ref('')
+  const handleCloseDialog = (value, confirm) => {
+    action.value = ''
     dialogFormVisible.value = value
+    if (confirm === 'confirm') {
+      getOrderData({ userId: user.$state.userId })
+    }
   }
 
   const handleUpdate = () => {
+    action.value = 'update'
     dialogFormVisible.value = true
     currentRow.value = { ...saveRow.value }
   }
   const handleAdd = () => {
+    action.value = 'add'
     dialogFormVisible.value = true
     currentRow.value = {}
   }
@@ -266,6 +276,7 @@
     @close-dialog="handleCloseDialog"
     :current-row="currentRow"
     :type-list="typeList"
+    :action="action"
   />
 </template>
 <style lang="scss"></style>

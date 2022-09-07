@@ -15,11 +15,32 @@ public class OrderServiceImpl implements OrderService {
     public OrderMapper orderMapper;
     @Override
     public List<Order> getUserAllOrder(OrderRequest req) {
+        if(req.getPage() == null && req.getSize() == null){
+            return null;
+        }
         if(req.getPage() != null && req.getSize() != null){
             Integer page = (req.getPage()-1) * req.getSize();
             req.setPage(page);
         }
         List<Order> orderList = orderMapper.getUserAllOrder(req);
         return orderList;
+    }
+
+    @Override
+    public Boolean insertOrder(Order req) {
+        if(req.getTypeId() == null || req.getAmount() == null || req.getDate() == null){
+            return false;
+        }
+        orderMapper.insertOrder(req);
+        return true;
+    }
+
+    @Override
+    public Boolean updateOrder(Order req) {
+        if(req.getTypeId() != null && req.getAmount() != null && req.getDate() != null){
+            orderMapper.updateOrder(req);
+            return true;
+        }
+        return false;
     }
 }

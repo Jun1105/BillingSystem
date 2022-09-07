@@ -6,10 +6,30 @@ function getAllOrder(body) {
     method: 'post',
     data: {
       page: 1,
-      size: 5,
+      size: 10,
       ...body
     }
   })
 }
 
-export { getAllOrder }
+function addOrder(body) {
+  return request({
+    url: '/addOrder',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+function updateOrder(body) {
+  return request({
+    url: '/updateOrder',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+export { getAllOrder, addOrder, updateOrder }

@@ -20,4 +20,14 @@ public class OrderController {
     public Result<List<Order>> getUserAllOrder(@RequestBody OrderRequest req){
         return Result.success("success", orderService.getUserAllOrder(req));
     }
+
+    @PostMapping("/addOrder")
+    public Result insertOrder(@RequestBody Order req){
+        return Result.success("success", orderService.insertOrder(req));
+    }
+
+    @PostMapping("/updateOrder")
+    public Result updateOrder(@RequestBody Order req){
+        return Result.success("success", orderService.updateOrder(req));
+    }
 }

@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface OrderService {
     List<Order> getUserAllOrder(OrderRequest req);
+
+    Boolean insertOrder(Order req);
+
+    Boolean updateOrder(Order req);
 }
