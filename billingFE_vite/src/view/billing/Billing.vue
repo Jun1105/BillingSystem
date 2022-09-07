@@ -172,6 +172,21 @@
     <el-form :model="order">
       <el-row :gutter="20">
         <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
+          <el-form-item label="时间：">
+            <el-date-picker
+              v-model="order.dates"
+              type="daterange"
+              unlink-panels
+              range-separator="To"
+              start-placeholder="Start date"
+              end-placeholder="End date"
+              :shortcuts="shortcuts"
+              :disabled-date="disabledDate"
+              value-format="YYYY-MM-DD"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="10" :lg="6" :xl="4">
           <el-form-item label="类型：">
             <el-select v-model="order.typeId" placeholder="please select type">
               <el-option
@@ -183,7 +198,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
+        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
           <el-form-item label="描述：">
             <el-input
               type="text"
@@ -202,28 +217,6 @@
               :min="0"
               :precision="2"
               controls-position="right"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
-          <el-form-item label="时间：">
-            <!-- <el-date-picker
-              v-model="order.date"
-              type="date"
-              placeholder="Pick a day"
-              :disabled-date="disabledDate"
-              value-format="YYYY-MM-DD"
-            /> -->
-            <el-date-picker
-              v-model="order.dates"
-              type="daterange"
-              unlink-panels
-              range-separator="To"
-              start-placeholder="Start date"
-              end-placeholder="End date"
-              :shortcuts="shortcuts"
-              :disabled-date="disabledDate"
-              value-format="YYYY-MM-DD"
             />
           </el-form-item>
         </el-col>
