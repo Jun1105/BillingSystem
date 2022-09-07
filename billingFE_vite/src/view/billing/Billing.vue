@@ -137,7 +137,7 @@
   <el-card>
     <el-form :model="order">
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="类型：">
             <el-select v-model="order.type" placeholder="please select type">
               <el-option
@@ -149,7 +149,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="描述：">
             <el-input
               type="text"
@@ -160,7 +160,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="金额：">
             <el-input-number
               v-model="order.amount"
@@ -171,7 +171,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="时间：">
             <el-date-picker
               v-model="order.date"
@@ -184,7 +184,7 @@
         </el-col>
       </el-row>
       <el-row justify="end">
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-button type="primary" :icon="Search" @click="searchForm">
             搜索
           </el-button>
