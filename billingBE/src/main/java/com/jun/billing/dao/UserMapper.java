@@ -1,7 +1,7 @@
 package com.jun.billing.dao;
 
-import com.jun.billing.pojo.Menu;
-import com.jun.billing.pojo.User;
+import com.jun.billing.entity.pojo.Menu;
+import com.jun.billing.entity.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

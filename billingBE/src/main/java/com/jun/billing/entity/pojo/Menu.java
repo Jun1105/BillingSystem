@@ -1,4 +1,4 @@
-package com.jun.billing.pojo;
+package com.jun.billing.entity.pojo;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.jun.billing.dto;
+package com.jun.billing.entity.dto;
 
-import com.jun.billing.pojo.Menu;
+import com.jun.billing.entity.pojo.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

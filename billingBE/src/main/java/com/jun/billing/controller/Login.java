@@ -1,6 +1,6 @@
 package com.jun.billing.controller;
 
-import com.jun.billing.pojo.User;
+import com.jun.billing.entity.pojo.User;
 import com.jun.billing.service.UserService;
 import com.jun.billing.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;

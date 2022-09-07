@@ -1,6 +1,6 @@
 package com.jun.billing.service;
 
-import com.jun.billing.dto.MenuDto;
+import com.jun.billing.entity.dto.MenuDto;
 
 import java.util.List;
 

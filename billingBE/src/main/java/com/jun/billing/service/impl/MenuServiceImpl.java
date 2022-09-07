@@ -1,8 +1,8 @@
 package com.jun.billing.service.impl;
 
 import com.jun.billing.dao.UserMapper;
-import com.jun.billing.dto.MenuDto;
-import com.jun.billing.pojo.Menu;
+import com.jun.billing.entity.dto.MenuDto;
+import com.jun.billing.entity.pojo.Menu;
 import com.jun.billing.service.MenuService;
 import org.springframework.stereotype.Service;
 

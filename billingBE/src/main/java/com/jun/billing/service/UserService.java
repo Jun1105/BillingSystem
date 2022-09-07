@@ -1,6 +1,6 @@
 package com.jun.billing.service;
 
-import com.jun.billing.pojo.User;
+import com.jun.billing.entity.pojo.User;
 
 import java.util.List;
 

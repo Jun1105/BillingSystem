@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jun.billing.dao.UserMapper">
-    <select id="getAllUser" resultType="com.jun.billing.pojo.User">
+    <select id="getAllUser" resultType="com.jun.billing.entity.pojo.User">
         select * from user
     </select>
 
-    <select id="getMenu" parameterType="java.lang.Integer" resultType="com.jun.billing.pojo.Menu">
+    <select id="getMenu" parameterType="java.lang.Integer" resultType="com.jun.billing.entity.pojo.Menu">
         SELECT id, pid, title,menu_name,url
         FROM menu, role_menu
         WHERE menu.id = role_menu.menu_id and role_menu.role_id = #{userId}

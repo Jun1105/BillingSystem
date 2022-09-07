@@ -1,9 +1,8 @@
 package com.jun.billing.service.impl;
 
 import com.jun.billing.dao.UserMapper;
-import com.jun.billing.pojo.User;
+import com.jun.billing.entity.pojo.User;
 import com.jun.billing.service.UserService;
-import com.jun.billing.utils.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
