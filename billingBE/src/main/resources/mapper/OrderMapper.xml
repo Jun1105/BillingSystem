@@ -35,8 +35,8 @@
         <if test="req.amount !=null and req.amount !=''">
             and uorder.amount = #{req.amount}
         </if>
-        <if test="req.date !=null">
-            and uorder.date = #{req.date}
+        <if test="req.dateFm !=null and req.dateTo !=null">
+            and uorder.date between #{req.dateFm} and #{req.dateTo}
         </if>
         ORDER BY  ${req.orderBy}
         <choose>

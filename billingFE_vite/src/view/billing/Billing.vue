@@ -68,6 +68,27 @@
     return time.getTime() > Date.now()
   }
 
+  const shortcuts = [
+    {
+      text: 'Last week',
+      value: () => {
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+        return [start, end]
+      }
+    },
+    {
+      text: 'Last month',
+      value: () => {
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+        return [start, end]
+      }
+    }
+  ]
+
   const searchForm = () => {
     getOrderData({
       userId: user.$state.userId,
@@ -186,10 +207,21 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="时间：">
-            <el-date-picker
+            <!-- <el-date-picker
               v-model="order.date"
               type="date"
               placeholder="Pick a day"
+              :disabled-date="disabledDate"
+              value-format="YYYY-MM-DD"
+            /> -->
+            <el-date-picker
+              v-model="order.dates"
+              type="daterange"
+              unlink-panels
+              range-separator="To"
+              start-placeholder="Start date"
+              end-placeholder="End date"
+              :shortcuts="shortcuts"
               :disabled-date="disabledDate"
               value-format="YYYY-MM-DD"
             />

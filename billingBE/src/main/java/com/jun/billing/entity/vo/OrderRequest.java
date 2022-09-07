@@ -15,5 +15,25 @@ public class OrderRequest {
     private Integer typeId;
     private String description;
     private BigDecimal amount;
-    private LocalDate date;
+    private LocalDate[] dates = new LocalDate[2];
+    private LocalDate dateFm;
+    private LocalDate dateTo;
+
+    public LocalDate getDateFm() {
+        if(this.dates.length > 1){
+            return this.dates[0];
+        }
+        else {
+            return null;
+        }
+    }
+
+    public LocalDate getDateTo() {
+        if(this.dates.length > 1){
+            return this.dates[1];
+        }
+        else {
+            return null;
+        }
+    }
 }
