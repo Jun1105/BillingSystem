@@ -4,15 +4,17 @@
     <resultMap id="orderMap" type="com.jun.billing.entity.pojo.Order">
         <id column="order_id" jdbcType="INTEGER" property="orderId" />
         <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
         <result column="description" jdbcType="VARCHAR" property="description" />
         <result column="amount" jdbcType="DECIMAL" property="amount" />
         <result column="date" jdbcType="DATE" property="date" />
         <result column="type_name" jdbcType="VARCHAR" property="typeName" />
     </resultMap>
-    <select id="getUserAllOrder" resultMap="orderMap" parameterType="java.lang.Integer">
+    <select id="getUserAllOrder" resultMap="orderMap" parameterType="com.jun.billing.entity.vo.OrderRequest">
         SELECT
-            uorder.id orderid,
+            uorder.id order_id,
             uorder.user_id,
+            uorder.type_id,
             uorder.description,
             uorder.amount,
             uorder.date,
@@ -20,7 +22,31 @@
         FROM
             user_order AS uorder
                 LEFT JOIN type ON uorder.type_id = `type`.id
-        WHERE
-            uorder.user_id = #{userId}
+        WHERE 1=1
+        <if test="req.userId !=null and req.userId !=''">
+            and uorder.user_id = #{req.userId}
+        </if>
+        <if test="req.typeId !=null and req.typeId !=''">
+            and uorder.type_id = #{req.typeId}
+        </if>
+        <if test="req.description !=null and req.description !=''">
+            and uorder.description = #{req.description}
+        </if>
+        <if test="req.amount !=null and req.amount !=''">
+            and uorder.amount = #{req.amount}
+        </if>
+        <if test="req.date !=null">
+            and uorder.date = #{req.date}
+        </if>
+        ORDER BY  ${req.orderBy}
+        <choose>
+            <when test="req.sort == true">
+                  asc
+            </when>
+            <when test="req.sort == false">
+               desc
+            </when>
+        </choose>
+            LIMIT #{req.page},#{req.size}
     </select>
 </mapper>

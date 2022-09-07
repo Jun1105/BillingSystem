@@ -15,7 +15,11 @@ public class OrderServiceImpl implements OrderService {
     public OrderMapper orderMapper;
     @Override
     public List<Order> getUserAllOrder(OrderRequest req) {
-        List<Order> orderList = orderMapper.getUserAllOrder(req.getUserId());
+        if(req.getPage() != null && req.getSize() != null){
+            Integer page = (req.getPage()-1) * req.getSize();
+            req.setPage(page);
+        }
+        List<Order> orderList = orderMapper.getUserAllOrder(req);
         return orderList;
     }
 }
