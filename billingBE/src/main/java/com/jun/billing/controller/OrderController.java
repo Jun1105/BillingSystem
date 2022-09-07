@@ -17,7 +17,7 @@ public class OrderController {
     public OrderService orderService;
 
     @PostMapping("/getAllOrder")
-    public Result<List<Order>> getUserAllOrder(@RequestBody OrderRequest req){
+    public Result getUserAllOrder(@RequestBody OrderRequest req){
         return Result.success("success", orderService.getUserAllOrder(req));
     }
 

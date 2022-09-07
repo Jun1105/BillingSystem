@@ -51,11 +51,13 @@
   const getOrderData = async body => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await getAllOrder(body)
+    console.log(res)
+
     if (res.code === 0) {
-      tableData.value = res.data.map((item, index) => {
+      tableData.value = res.data?.orderList.map((item, index) => {
         return { index: index + 1, ...item }
       })
-      total.value = res.data.length
+      total.value = res.data.total
     }
   }
 

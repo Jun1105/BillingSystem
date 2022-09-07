@@ -1,6 +1,7 @@
 package com.jun.billing.service.impl;
 
 import com.jun.billing.dao.OrderMapper;
+import com.jun.billing.entity.dto.OrderDto;
 import com.jun.billing.entity.pojo.Order;
 import com.jun.billing.entity.vo.OrderRequest;
 import com.jun.billing.service.OrderService;
@@ -14,7 +15,7 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     public OrderMapper orderMapper;
     @Override
-    public List<Order> getUserAllOrder(OrderRequest req) {
+    public OrderDto getUserAllOrder(OrderRequest req) {
         if(req.getPage() == null && req.getSize() == null){
             return null;
         }
@@ -22,8 +23,11 @@ public class OrderServiceImpl implements OrderService {
             Integer page = (req.getPage()-1) * req.getSize();
             req.setPage(page);
         }
+        OrderDto orderDto = new OrderDto();
         List<Order> orderList = orderMapper.getUserAllOrder(req);
-        return orderList;
+        orderDto.setOrderList(orderList);
+        orderDto.setTotal(orderList.size());
+        return orderDto;
     }
 
     @Override
