@@ -4,8 +4,9 @@
   import Table from '@/components/table'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import DialogFormVue from './component/DialogForm.vue'
-  import { getAllOrder } from '@/api/order'
+  import { getAllOrder, deleteOrder } from '@/api/order'
   import { userStore } from '@/stores/user'
+  import loading from '@/utils/loading'
   const user = userStore()
   const order = reactive({
     typeId: null,
@@ -49,9 +50,9 @@
   ])
 
   const getOrderData = async body => {
+    loading(true)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await getAllOrder(body)
-    console.log(res)
 
     if (res.code === 0) {
       tableData.value = res.data?.orderList.map((item, index) => {
@@ -59,6 +60,7 @@
       })
       total.value = res.data.total
     }
+    loading(false)
   }
 
   onMounted(() => {
@@ -165,16 +167,36 @@
       type: 'warning'
     })
       .then(() => {
-        console.log(currentRow.value)
-        ElMessage({
-          type: 'success',
-          message: 'Delete completed'
-        })
+        loading(true)
+        deleteOrder(currentRow.value.orderId)
+          .then(value => {
+            if (value.data) {
+              getOrderData({ userId: user.$state.userId })
+              ElMessage({
+                type: 'success',
+                message: 'Delete Success'
+              })
+            } else {
+              ElMessage({
+                type: 'error',
+                message: 'Delete Failed'
+              })
+            }
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'error',
+              message: 'Delete Failed'
+            })
+          })
+          .finally(() => {
+            loading(false)
+          })
       })
       .catch(() => {
         ElMessage({
           type: 'info',
-          message: 'Delete canceled'
+          message: 'Delete Canceled'
         })
       })
   }
@@ -224,10 +246,20 @@
         <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="6">
           <el-form-item label="金额：">
             <el-input-number
-              v-model="order.amount"
+              v-model="order.minAmount"
               class="mx-4"
               :min="0"
               :precision="2"
+              placeholder="min"
+              controls-position="right"
+            />
+            <el-icon><Minus /></el-icon>
+            <el-input-number
+              v-model="order.maxAmount"
+              class="mx-4"
+              :min="0"
+              :precision="2"
+              placeholder="max"
               controls-position="right"
             />
           </el-form-item>

@@ -6,6 +6,7 @@
   import type { FormInstance, FormRules } from 'element-plus'
   import { addOrder, updateOrder } from '@/api/order'
   import { userStore } from '@/stores/user'
+  import loading from '@/utils/loading'
   const user = userStore()
 
   interface Props {
@@ -70,6 +71,7 @@
     await formEl.validate(async (valid, fields) => {
       if (valid) {
         let isResult = false
+        loading(true)
         if (props.action === 'add') {
           const res: any = await addOrder({
             userId: user.$state.userId,
@@ -87,6 +89,7 @@
             isResult = true
           }
         }
+        loading(false)
         if (isResult) {
           clearForm()
           $emit('closeDialog', false, 'confirm')

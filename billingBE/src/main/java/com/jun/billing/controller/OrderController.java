@@ -30,4 +30,9 @@ public class OrderController {
     public Result updateOrder(@RequestBody Order req){
         return Result.success("success", orderService.updateOrder(req));
     }
+
+    @PostMapping("/deleteOrder")
+    public Result deleteOrder(@RequestBody Order req){
+        return Result.success("success", orderService.deleteOrder(req.getOrderId()));
+    }
 }

@@ -47,4 +47,13 @@ public class OrderServiceImpl implements OrderService {
         }
         return false;
     }
+
+    @Override
+    public Boolean deleteOrder(Integer orderId) {
+        if(orderId != null){
+            orderMapper.deleteOrder(orderId);
+            return true;
+        }
+        return false;
+    }
 }

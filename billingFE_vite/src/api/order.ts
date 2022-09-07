@@ -32,4 +32,14 @@ function updateOrder(body) {
   })
 }
 
-export { getAllOrder, addOrder, updateOrder }
+function deleteOrder(orderId: number) {
+  return request({
+    url: '/deleteOrder',
+    method: 'post',
+    data: {
+      orderId
+    }
+  })
+}
+
+export { getAllOrder, addOrder, updateOrder, deleteOrder }

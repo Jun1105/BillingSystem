@@ -14,6 +14,8 @@ public class OrderRequest {
     private boolean sort = false;
     private Integer typeId;
     private String description;
+    private BigDecimal minAmount;
+    private BigDecimal maxAmount;
     private BigDecimal amount;
     private LocalDate[] dates = new LocalDate[2];
     private LocalDate dateFm;

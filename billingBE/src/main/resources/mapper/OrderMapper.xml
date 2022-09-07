@@ -32,8 +32,11 @@
         <if test="req.description !=null and req.description !=''">
             and uorder.description like concat('%',#{req.description,jdbcType=VARCHAR},'%')
         </if>
-        <if test="req.amount !=null and req.amount !=''">
-            and uorder.amount = #{req.amount}
+        <if test="req.minAmount !=null and req.minAmount !=''">
+            and uorder.amount &gt;= #{req.minAmount}
+        </if>
+        <if test="req.maxAmount !=null and req.maxAmount !=null">
+            and uorder.amount &lt;= #{req.maxAmount}
         </if>
         <if test="req.dateFm !=null and req.dateTo !=null">
             and uorder.date between #{req.dateFm} and #{req.dateTo}

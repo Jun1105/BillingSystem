@@ -12,4 +12,6 @@ public interface OrderService {
     Boolean insertOrder(Order req);
 
     Boolean updateOrder(Order req);
+
+    Boolean deleteOrder(Integer orderId);
 }
