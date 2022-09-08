@@ -42,4 +42,14 @@ function deleteOrder(orderId: number) {
   })
 }
 
-export { getAllOrder, addOrder, updateOrder, deleteOrder }
+function getOrderCount(body) {
+  return request({
+    url: '/getOrderCount',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+export { getAllOrder, addOrder, updateOrder, deleteOrder, getOrderCount }

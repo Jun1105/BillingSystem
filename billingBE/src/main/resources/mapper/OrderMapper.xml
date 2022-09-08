@@ -76,4 +76,13 @@
     <delete id="deleteOrder" parameterType="java.lang.Integer">
         delete from user_order where id = #{orderId}
     </delete>
+
+    <select id="getOrderCount" parameterType="com.jun.billing.entity.vo.OrderCountRequest" resultType="com.jun.billing.entity.pojo.OrderCount">
+        select
+            `date`, sum(amount) totalAmount
+        from user_order
+        where user_id = #{req.userId} and  `date` &gt;= #{req.startDate} and `date` &lt;= #{req.endDate}
+        GROUP BY
+            `date`
+    </select>
 </mapper>

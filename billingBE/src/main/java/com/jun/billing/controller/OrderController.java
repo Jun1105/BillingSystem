@@ -1,6 +1,7 @@
 package com.jun.billing.controller;
 
 import com.jun.billing.entity.pojo.Order;
+import com.jun.billing.entity.vo.OrderCountRequest;
 import com.jun.billing.entity.vo.OrderRequest;
 import com.jun.billing.service.OrderService;
 import com.jun.billing.utils.Result;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 public class OrderController {
@@ -34,5 +34,10 @@ public class OrderController {
     @PostMapping("/deleteOrder")
     public Result deleteOrder(@RequestBody Order req){
         return Result.success("success", orderService.deleteOrder(req.getOrderId()));
+    }
+
+    @PostMapping("/getOrderCount")
+    public Result getOrderCount(@RequestBody OrderCountRequest orderCountRequest){
+        return Result.success("success", orderService.getOrderCount(orderCountRequest));
     }
 }

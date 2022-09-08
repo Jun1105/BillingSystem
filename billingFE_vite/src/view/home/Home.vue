@@ -1,9 +1,13 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <!-- @format -->
 
 <script setup lang="ts">
   import * as echarts from 'echarts'
   import { onMounted, ref } from 'vue'
   import { yesterday, lastWeek } from '@/utils/date'
+  import { getOrderCount } from '@/api/order'
+  import { userStore } from '@/stores/user'
+  const user = userStore()
   type EChartsOption = echarts.EChartsOption
 
   let sevenEChartsData = ref(null)
@@ -11,7 +15,7 @@
 
   // const weekChartDom = document.getElementById('week')
   // let weekECharts = echarts.init(weekChartDom)
-  const getSevenEcharts = () => {
+  const getSevenEcharts = async () => {
     const sevenChartDom = document.getElementById('seven')
 
     let sevenECharts = echarts.init(sevenChartDom)
@@ -19,18 +23,37 @@
     sevenEChartsData.value = sevenECharts
 
     const seven = yesterday(null)
-    const six = yesterday(seven)
-    const five = yesterday(six)
-    const four = yesterday(five)
-    const three = yesterday(four)
-    const two = yesterday(three)
     const one = lastWeek(seven)
+
+    const res: any = await getOrderCount({
+      userId: user.$state.userId,
+      startDate: one,
+      endDate: seven
+    })
+    let xData = []
+    let yData = []
+    if (res.code === 0) {
+      res.data.forEach(item => {
+        xData.push(item.date)
+        yData.push(item.totalAmount)
+      })
+    }
 
     let sevenOption: EChartsOption
     sevenOption = {
+      tooltip: {
+        show: true,
+        formatter: '金额: {c0}',
+        trigger: 'axis',
+        axisPointer: {
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
       xAxis: {
         type: 'category',
-        data: [one, two, three, four, five, six, seven],
+        data: xData,
         axisLabel: {
           rotate: -15
         }
@@ -38,13 +61,9 @@
       yAxis: {
         type: 'value'
       },
-      tooltip: {
-        show: true,
-        formatter: '{b0}: {c0}'
-      },
       series: [
         {
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          data: yData,
           type: 'line',
           smooth: true
         }
