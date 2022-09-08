@@ -7,7 +7,6 @@
   import { yesterday, sevenBefore, sevenAfter, getWeek } from '@/utils/date'
   import { getOrderCount, getTypeCount, getWeekOrder } from '@/api/order'
   import { userStore } from '@/stores/user'
-  import loading from '@/utils/loading'
   const user = userStore()
   type EChartsOption = echarts.EChartsOption
 
@@ -43,7 +42,7 @@
     option = {
       tooltip: {
         show: true,
-        formatter: '金额: {c0}',
+        formatter: '{b0}: ￥{c0}',
         trigger: 'axis',
         axisPointer: {
           label: {
@@ -124,7 +123,8 @@
 
     option = {
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '总计: ￥{c0}'
       },
       legend: {
         top: '5%',
@@ -193,6 +193,7 @@
     option = {
       tooltip: {
         trigger: 'axis',
+        formatter: '总计: ￥{c0}',
         axisPointer: {
           type: 'shadow'
         }
@@ -224,11 +225,9 @@
   }
 
   onMounted(async () => {
-    loading(true)
     await getSevenEcharts()
     await getSevenPie()
     await getWeekECharts()
-    loading(false)
   })
 </script>
 <template>
@@ -241,7 +240,7 @@
     </el-col>
     <el-col :xs="24" :sm="24" :md="12" :lg="12">
       <el-card>
-        <h3 class="text_center">消费类型</h3>
+        <h3 class="text_center">七日消费类型总计</h3>
         <div id="type" class="echarts"></div>
       </el-card>
     </el-col>
