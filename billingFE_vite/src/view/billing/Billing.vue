@@ -65,7 +65,7 @@
     }
   }
 
-  onMounted(async () => {
+  onMounted(() => {
     loading(true)
     getOrderData({ userId: user.$state.userId })
     getTypeList()
