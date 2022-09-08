@@ -4,6 +4,7 @@ import com.jun.billing.dao.OrderMapper;
 import com.jun.billing.entity.dto.OrderDto;
 import com.jun.billing.entity.pojo.Order;
 import com.jun.billing.entity.pojo.OrderCount;
+import com.jun.billing.entity.pojo.TypeCount;
 import com.jun.billing.entity.vo.OrderCountRequest;
 import com.jun.billing.entity.vo.OrderRequest;
 import com.jun.billing.service.OrderService;
@@ -78,6 +79,11 @@ public class OrderServiceImpl implements OrderService {
             orderCounts.add(count);
         }
         return orderCounts;
+    }
+
+    @Override
+    public List<TypeCount> getTypeCount(OrderCountRequest orderCountRequest) {
+        return orderMapper.getTypeCount(orderCountRequest);
     }
 
     private List<LocalDate> getWeekPeriod(LocalDate startDate){

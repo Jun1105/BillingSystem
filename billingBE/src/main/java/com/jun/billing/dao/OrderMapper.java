@@ -2,6 +2,7 @@ package com.jun.billing.dao;
 
 import com.jun.billing.entity.pojo.Order;
 import com.jun.billing.entity.pojo.OrderCount;
+import com.jun.billing.entity.pojo.TypeCount;
 import com.jun.billing.entity.vo.OrderCountRequest;
 import com.jun.billing.entity.vo.OrderRequest;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,4 +23,6 @@ public interface OrderMapper {
     void deleteOrder(@Param("orderId") Integer orderId);
 
     List<OrderCount> getOrderCount(@Param("req") OrderCountRequest orderCount);
+
+    List<TypeCount> getTypeCount(@Param("req") OrderCountRequest orderCount);
 }

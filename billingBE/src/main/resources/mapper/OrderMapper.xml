@@ -85,6 +85,18 @@
         GROUP BY
             `date`
     </select>
+
+    <select id="getTypeCount" parameterType="com.jun.billing.entity.vo.OrderCountRequest" resultType="com.jun.billing.entity.pojo.TypeCount">
+        SELECT
+        sum( amount ) totalAmount,
+        t.`name` typeName
+        FROM
+        ( SELECT * FROM user_order WHERE user_id = #{req.userId} AND `date` &gt;= #{req.startDate} and `date` &lt;= #{req.endDate} ) a
+        LEFT JOIN `type` t ON t.id = a.type_id
+        GROUP BY
+        a.type_id
+    </select>
+
     <select id="getOrderTotal" resultType="java.lang.Integer" parameterType="com.jun.billing.entity.vo.OrderRequest">
         SELECT
           count(*)

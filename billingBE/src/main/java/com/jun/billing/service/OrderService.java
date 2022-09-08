@@ -3,6 +3,7 @@ package com.jun.billing.service;
 import com.jun.billing.entity.dto.OrderDto;
 import com.jun.billing.entity.pojo.Order;
 import com.jun.billing.entity.pojo.OrderCount;
+import com.jun.billing.entity.pojo.TypeCount;
 import com.jun.billing.entity.vo.OrderCountRequest;
 import com.jun.billing.entity.vo.OrderRequest;
 
@@ -18,4 +19,6 @@ public interface OrderService {
     Boolean deleteOrder(Integer orderId);
 
     List<OrderCount> getOrderCount(OrderCountRequest orderCountRequest);
+
+    List<TypeCount> getTypeCount(OrderCountRequest orderCountRequest);
 }

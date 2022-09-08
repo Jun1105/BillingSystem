@@ -52,4 +52,21 @@ function getOrderCount(body) {
   })
 }
 
-export { getAllOrder, addOrder, updateOrder, deleteOrder, getOrderCount }
+function getTypeCount(body) {
+  return request({
+    url: '/getTypeCount',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+export {
+  getAllOrder,
+  addOrder,
+  updateOrder,
+  deleteOrder,
+  getOrderCount,
+  getTypeCount
+}

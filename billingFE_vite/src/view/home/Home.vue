@@ -5,16 +5,14 @@
   import * as echarts from 'echarts'
   import { onMounted, ref } from 'vue'
   import { yesterday, lastWeek } from '@/utils/date'
-  import { getOrderCount } from '@/api/order'
+  import { getOrderCount, getTypeCount } from '@/api/order'
   import { userStore } from '@/stores/user'
   const user = userStore()
   type EChartsOption = echarts.EChartsOption
 
   let sevenEChartsData = ref(null)
-  // const weekChartDom = ref(null)
+  const weekEChartsData = ref(null)
 
-  // const weekChartDom = document.getElementById('week')
-  // let weekECharts = echarts.init(weekChartDom)
   const getSevenEcharts = async () => {
     const sevenChartDom = document.getElementById('seven')
 
@@ -39,8 +37,8 @@
       })
     }
 
-    let sevenOption: EChartsOption
-    sevenOption = {
+    let option: EChartsOption
+    option = {
       tooltip: {
         show: true,
         formatter: '金额: {c0}',
@@ -70,7 +68,7 @@
       ]
     }
 
-    sevenECharts.setOption(sevenOption)
+    sevenECharts.setOption(option)
     window.addEventListener('resize', () => {
       // // 重新设置echarts数据demo
       // let option = {
@@ -94,8 +92,79 @@
     })
   }
 
+  const getSevenPie = async () => {
+    const weekChartDom = document.getElementById('week')
+    let weekECharts = echarts.init(weekChartDom)
+
+    weekEChartsData.value = weekECharts
+
+    let option: EChartsOption
+
+    const seven = yesterday(null)
+    const one = lastWeek(seven)
+
+    const res: any = await getTypeCount({
+      userId: user.$state.userId,
+      startDate: one,
+      endDate: seven
+    })
+
+    let data = []
+    if (res.code === 0) {
+      data = res.data.map(item => {
+        return {
+          name: item.typeName,
+          value: item.totalAmount
+        }
+      })
+    }
+
+    option = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data
+        }
+      ]
+    }
+    weekEChartsData.value.setOption(option)
+    window.addEventListener('resize', () => {
+      weekEChartsData.value.resize()
+    })
+  }
+
   onMounted(() => {
     getSevenEcharts()
+    getSevenPie()
   })
 </script>
 <template>
