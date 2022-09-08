@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue'
   import { Search, Edit, Delete } from '@element-plus/icons-vue'
@@ -46,32 +47,25 @@
   ])
 
   const getOrderData = async body => {
-    const res = await getAllOrder(body)
-    return res
+    const res: any = await getAllOrder(body)
+    if (res.code === 0) {
+      tableData.value = res.data?.orderList.map((item, index) => {
+        return { index: index + 1, ...item }
+      })
+      total.value = res.data.total
+    }
   }
 
   const getTypeList = async () => {
-    const res = await getType()
-    return res
+    const res: any = await getType()
+    if (res.code === 0) {
+      typeList.value = [...res.data]
+    }
   }
 
   onMounted(() => {
-    Promise.all([
-      getOrderData({ userId: user.$state.userId }),
-      getTypeList()
-    ]).then(value => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const [table, type]: Array<any> = value
-      if (table.code === 0) {
-        tableData.value = table.data?.orderList.map((item, index) => {
-          return { index: index + 1, ...item }
-        })
-        total.value = table.data.total
-      }
-      if (type.code === 0) {
-        typeList.value = [...type.data]
-      }
-    })
+    getOrderData({ userId: user.$state.userId })
+    getTypeList()
   })
   let isClick = ref(true)
 
@@ -152,6 +146,8 @@
   const handleCloseDialog = (value, confirm) => {
     action.value = ''
     dialogFormVisible.value = value
+    console.log(confirm)
+
     if (confirm === 'confirm') {
       getOrderData({ userId: user.$state.userId })
     }

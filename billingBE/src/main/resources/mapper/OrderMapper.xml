@@ -85,4 +85,30 @@
         GROUP BY
             `date`
     </select>
+    <select id="getOrderTotal" resultType="java.lang.Integer" parameterType="com.jun.billing.entity.vo.OrderRequest">
+        SELECT
+          count(*)
+        FROM
+        user_order AS uorder
+        LEFT JOIN type ON uorder.type_id = `type`.id
+        WHERE 1=1
+        <if test="req.userId !=null and req.userId !=''">
+            and uorder.user_id = #{req.userId}
+        </if>
+        <if test="req.typeId !=null and req.typeId !=''">
+            and uorder.type_id = #{req.typeId}
+        </if>
+        <if test="req.description !=null and req.description !=''">
+            and uorder.description like concat('%',#{req.description,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="req.minAmount !=null and req.minAmount !=''">
+            and uorder.amount &gt;= #{req.minAmount}
+        </if>
+        <if test="req.maxAmount !=null and req.maxAmount !=null">
+            and uorder.amount &lt;= #{req.maxAmount}
+        </if>
+        <if test="req.dateFm !=null and req.dateTo !=null">
+            and uorder.date between #{req.dateFm} and #{req.dateTo}
+        </if>
+    </select>
 </mapper>

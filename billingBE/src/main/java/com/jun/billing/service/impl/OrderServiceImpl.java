@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
         OrderDto orderDto = new OrderDto();
         List<Order> orderList = orderMapper.getUserAllOrder(req);
         orderDto.setOrderList(orderList);
-        orderDto.setTotal(orderList.size());
+        orderDto.setTotal(orderMapper.getOrderTotal(req));
         return orderDto;
     }
 

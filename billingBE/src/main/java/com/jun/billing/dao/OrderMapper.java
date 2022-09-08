@@ -13,6 +13,8 @@ import java.util.List;
 public interface OrderMapper {
     List<Order> getUserAllOrder(@Param("req") OrderRequest req);
 
+    Integer getOrderTotal(@Param("req") OrderRequest req);
+
     Integer insertOrder(@Param("req") Order req);
 
     void updateOrder(@Param("req") Order req);
