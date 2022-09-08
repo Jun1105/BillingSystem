@@ -66,6 +66,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderCount> getOrderCount(OrderCountRequest orderCountRequest) {
+        if(orderCountRequest.getUserId() == null || orderCountRequest.getStartDate() == null || orderCountRequest.getEndDate() == null){
+            return null;
+        }
         List<OrderCount> orderCount = orderMapper.getOrderCount(orderCountRequest);
         List<OrderCount> orderCounts = new ArrayList<>();
         List<LocalDate> weekPeriod = getWeekPeriod(orderCountRequest.getStartDate());
@@ -83,6 +86,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<TypeCount> getTypeCount(OrderCountRequest orderCountRequest) {
+        if(orderCountRequest.getUserId() == null || orderCountRequest.getStartDate() == null || orderCountRequest.getEndDate() == null){
+            return null;
+        }
         return orderMapper.getTypeCount(orderCountRequest);
     }
 

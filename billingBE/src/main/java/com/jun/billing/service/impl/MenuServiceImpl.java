@@ -15,8 +15,14 @@ public class MenuServiceImpl implements MenuService {
     @Resource
     public UserMapper userMapper;
     @Override
-    public List<MenuDto> getMenu(int userId) {
+    public List<MenuDto> getMenu(Integer userId) {
+        if(userId == null){
+            return null;
+        }
         List<Menu> menu = userMapper.getMenu(userId);
+        if(menu.size() == 0){
+            return null;
+        }
         return getNewMenu(menu);
     }
 

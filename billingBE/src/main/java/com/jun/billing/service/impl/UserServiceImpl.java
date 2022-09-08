@@ -19,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String username, String password) {
+        if(username == null || username.isEmpty() || password == null || password.isEmpty()){
+            return null;
+        }
         return userMapper.getUser(username, password);
     }
 }
