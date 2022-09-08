@@ -3,15 +3,17 @@
 
 <script setup lang="ts">
   import * as echarts from 'echarts'
-  import { onMounted, ref } from 'vue'
-  import { yesterday, lastWeek } from '@/utils/date'
-  import { getOrderCount, getTypeCount } from '@/api/order'
+  import { onMounted, ref, markRaw } from 'vue'
+  import { yesterday, sevenBefore, sevenAfter, getWeek } from '@/utils/date'
+  import { getOrderCount, getTypeCount, getWeekOrder } from '@/api/order'
   import { userStore } from '@/stores/user'
+  import loading from '@/utils/loading'
   const user = userStore()
   type EChartsOption = echarts.EChartsOption
 
   let sevenEChartsData = ref(null)
-  const weekEChartsData = ref(null)
+  let sevenPieData = ref(null)
+  let weekEChartsData = ref(null)
 
   const getSevenEcharts = async () => {
     const sevenChartDom = document.getElementById('seven')
@@ -21,7 +23,7 @@
     sevenEChartsData.value = sevenECharts
 
     const seven = yesterday(null)
-    const one = lastWeek(seven)
+    const one = sevenBefore(seven)
 
     const res: any = await getOrderCount({
       userId: user.$state.userId,
@@ -53,7 +55,8 @@
         type: 'category',
         data: xData,
         axisLabel: {
-          rotate: -15
+          rotate: -15,
+          margin: 15
         }
       },
       yAxis: {
@@ -93,15 +96,15 @@
   }
 
   const getSevenPie = async () => {
-    const weekChartDom = document.getElementById('week')
-    let weekECharts = echarts.init(weekChartDom)
+    const sevenPieDom = document.getElementById('type')
+    let sevenPieCharts = echarts.init(sevenPieDom)
 
-    weekEChartsData.value = weekECharts
+    sevenPieData.value = sevenPieCharts
 
     let option: EChartsOption
 
     const seven = yesterday(null)
-    const one = lastWeek(seven)
+    const one = sevenBefore(seven)
 
     const res: any = await getTypeCount({
       userId: user.$state.userId,
@@ -129,7 +132,7 @@
       },
       series: [
         {
-          name: 'Access From',
+          name: '类型',
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -156,29 +159,104 @@
         }
       ]
     }
-    weekEChartsData.value.setOption(option)
+    sevenPieData.value.setOption(option)
     window.addEventListener('resize', () => {
-      weekEChartsData.value.resize()
+      sevenPieData.value.resize()
     })
   }
 
-  onMounted(() => {
-    getSevenEcharts()
-    getSevenPie()
+  const getWeekECharts = async () => {
+    const weekChartDom = document.getElementById('week')
+
+    let weekECharts = echarts.init(weekChartDom)
+
+    const week = markRaw(weekECharts)
+
+    weekEChartsData.value = weekECharts
+
+    const [startDate, endDate] = getWeek(4)
+    const res: any = await getWeekOrder({
+      userId: user.$state.userId,
+      startDate: startDate,
+      endDate: endDate
+    })
+    let xData = []
+    let yData = []
+    if (res.code === 0) {
+      res.data.forEach(item => {
+        xData.push(`${item.date}~${sevenAfter(item.date)}`)
+        yData.push(item.totalAmount)
+      })
+    }
+
+    let option: EChartsOption
+    option = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: xData,
+        axisLabel: {
+          rotate: -15,
+          margin: 15
+        }
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: '总计',
+          data: yData,
+          type: 'bar'
+        }
+      ]
+    }
+    week.setOption(option)
+
+    window.addEventListener('resize', () => {
+      week.resize()
+    })
+  }
+
+  onMounted(async () => {
+    loading(true)
+    await getSevenEcharts()
+    await getSevenPie()
+    await getWeekECharts()
+    loading(false)
   })
 </script>
 <template>
   <el-row class="home" :gutter="20">
     <el-col :xs="24" :sm="24" :md="12" :lg="12">
       <el-card>
-        <h3 class="text_center">七日账单</h3>
-        <div id="seven"></div>
+        <h3 class="text_center">每日支出</h3>
+        <div id="seven" class="echarts"></div>
       </el-card>
     </el-col>
     <el-col :xs="24" :sm="24" :md="12" :lg="12">
       <el-card>
-        <h3 class="text_center">周账单</h3>
-        <div id="week"></div>
+        <h3 class="text_center">消费类型</h3>
+        <div id="type" class="echarts"></div>
+      </el-card>
+    </el-col>
+  </el-row>
+  <el-row class="second" :gutter="20">
+    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+      <el-card>
+        <h3 class="text_center">每周消费</h3>
+        <div id="week" class="echarts"></div>
+      </el-card>
+    </el-col>
+    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+      <el-card>
+        <!-- <h3 class="text_center">周账单</h3>
+        <div id="week"></div> -->
       </el-card>
     </el-col>
   </el-row>
@@ -190,11 +268,14 @@
   h3 {
     margin: 0;
   }
-  .home {
+  .home,
+  .second {
     margin: 1px !important;
-    #seven,
-    #week {
+    .echarts {
       height: 40vh;
     }
+  }
+  .second {
+    margin-top: 20px !important;
   }
 </style>

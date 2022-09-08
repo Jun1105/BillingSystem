@@ -21,4 +21,6 @@ public interface OrderService {
     List<OrderCount> getOrderCount(OrderCountRequest orderCountRequest);
 
     List<TypeCount> getTypeCount(OrderCountRequest orderCountRequest);
+
+    List<OrderCount> getWeekOrder(OrderCountRequest orderCountRequest);
 }

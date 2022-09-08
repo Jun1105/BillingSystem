@@ -61,6 +61,15 @@ function getTypeCount(body) {
     }
   })
 }
+function getWeekOrder(body) {
+  return request({
+    url: '/getWeekOrder',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
 
 export {
   getAllOrder,
@@ -68,5 +77,6 @@ export {
   updateOrder,
   deleteOrder,
   getOrderCount,
-  getTypeCount
+  getTypeCount,
+  getWeekOrder
 }

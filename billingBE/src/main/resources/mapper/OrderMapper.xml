@@ -39,7 +39,7 @@
             and uorder.amount &lt;= #{req.maxAmount}
         </if>
         <if test="req.dateFm !=null and req.dateTo !=null">
-            and uorder.date between #{req.dateFm} and #{req.dateTo}
+            and uorder.date &gt;= #{req.dateFm} and uorder.date &lt;= #{req.dateTo}
         </if>
         ORDER BY  ${req.orderBy}
         <choose>

@@ -45,4 +45,9 @@ public class OrderController {
     public Result getTypeCount(@RequestBody OrderCountRequest orderCountRequest){
         return Result.success("success", orderService.getTypeCount(orderCountRequest));
     }
+
+    @PostMapping("/getWeekOrder")
+    public Result getWeekOrder(@RequestBody OrderCountRequest orderCountRequest){
+        return Result.success("success", orderService.getWeekOrder(orderCountRequest));
+    }
 }
