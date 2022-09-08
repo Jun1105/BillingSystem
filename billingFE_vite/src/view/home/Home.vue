@@ -3,6 +3,7 @@
 <script setup lang="ts">
   import * as echarts from 'echarts'
   import { onMounted, ref } from 'vue'
+  import { yesterday, lastWeek } from '@/utils/date'
   type EChartsOption = echarts.EChartsOption
 
   let sevenEChartsData = ref(null)
@@ -17,11 +18,22 @@
 
     sevenEChartsData.value = sevenECharts
 
+    const seven = yesterday(null)
+    const six = yesterday(seven)
+    const five = yesterday(six)
+    const four = yesterday(five)
+    const three = yesterday(four)
+    const two = yesterday(three)
+    const one = lastWeek(seven)
+
     let sevenOption: EChartsOption
     sevenOption = {
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: [one, two, three, four, five, six, seven],
+        axisLabel: {
+          rotate: -15
+        }
       },
       yAxis: {
         type: 'value'
