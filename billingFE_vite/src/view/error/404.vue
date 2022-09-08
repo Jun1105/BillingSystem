@@ -8,6 +8,13 @@
   }
 </script>
 <template>
-  <h1>404</h1>
-  <el-button @click="handleClick">返回</el-button>
+  <div class="page404">
+    <h1>404</h1>
+    <el-button @click="handleClick">返回</el-button>
+  </div>
 </template>
+<style>
+  .page404 {
+    text-align: center;
+  }
+</style>
