@@ -7,4 +7,11 @@ function getMenu(userId) {
   })
 }
 
-export { getMenu }
+function getType() {
+  return request({
+    url: '/getType',
+    method: 'get'
+  })
+}
+
+export { getMenu, getType }

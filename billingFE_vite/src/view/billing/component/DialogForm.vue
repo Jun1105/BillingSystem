@@ -107,9 +107,9 @@
         <el-select v-model="form.typeId" placeholder="please select type">
           <el-option
             v-for="item in props.typeList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
           />
         </el-select>
       </el-form-item>

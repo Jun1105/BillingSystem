@@ -5,6 +5,7 @@
   import { ElMessage, ElMessageBox } from 'element-plus'
   import DialogFormVue from './component/DialogForm.vue'
   import { getAllOrder, deleteOrder } from '@/api/order'
+  import { getType } from '@/api/common'
   import { userStore } from '@/stores/user'
   import loading from '@/utils/loading'
   const user = userStore()
@@ -14,12 +15,7 @@
     amount: 0,
     date: null
   })
-  const typeList = ref([
-    {
-      label: '餐饮',
-      value: 1
-    }
-  ])
+  const typeList = ref([])
 
   const total = ref(5)
   const tableData = ref([])
@@ -50,7 +46,6 @@
   ])
 
   const getOrderData = async body => {
-    loading(true)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await getAllOrder(body)
 
@@ -60,11 +55,21 @@
       })
       total.value = res.data.total
     }
-    loading(false)
   }
 
-  onMounted(() => {
+  const getTypeList = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const res: any = await getType()
+    if (res.code === 0) {
+      typeList.value = [...res.data]
+    }
+  }
+
+  onMounted(async () => {
+    loading(true)
     getOrderData({ userId: user.$state.userId })
+    getTypeList()
+    loading(false)
   })
   let isClick = ref(true)
 
@@ -225,9 +230,9 @@
             <el-select v-model="order.typeId" placeholder="please select type">
               <el-option
                 v-for="item in typeList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
