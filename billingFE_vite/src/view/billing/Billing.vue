@@ -46,30 +46,32 @@
   ])
 
   const getOrderData = async body => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const res: any = await getAllOrder(body)
-
-    if (res.code === 0) {
-      tableData.value = res.data?.orderList.map((item, index) => {
-        return { index: index + 1, ...item }
-      })
-      total.value = res.data.total
-    }
+    const res = await getAllOrder(body)
+    return res
   }
 
   const getTypeList = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const res: any = await getType()
-    if (res.code === 0) {
-      typeList.value = [...res.data]
-    }
+    const res = await getType()
+    return res
   }
 
   onMounted(() => {
-    loading(true)
-    getOrderData({ userId: user.$state.userId })
-    getTypeList()
-    loading(false)
+    Promise.all([
+      getOrderData({ userId: user.$state.userId }),
+      getTypeList()
+    ]).then(value => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const [table, type]: Array<any> = value
+      if (table.code === 0) {
+        tableData.value = table.data?.orderList.map((item, index) => {
+          return { index: index + 1, ...item }
+        })
+        total.value = table.data.total
+      }
+      if (type.code === 0) {
+        typeList.value = [...type.data]
+      }
+    })
   })
   let isClick = ref(true)
 
