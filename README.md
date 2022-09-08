@@ -2,7 +2,7 @@
 # 说明：本系统仅限个人应用，禁止商业
 
 ## 项目说明
-### billingBE后端代码
+### billingBE后端使用Spring Boot + Mybatis + MySQL
 
 ### billingFE使用vue/cli脚手架创建vue3项目
 
