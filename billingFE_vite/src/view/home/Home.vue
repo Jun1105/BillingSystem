@@ -232,30 +232,25 @@
 </script>
 <template>
   <el-row class="home" :gutter="20">
-    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+    <el-col :xs="24" :sm="24" :md="24" :lg="24">
       <el-card>
         <h3 class="text_center">每日支出</h3>
         <div id="seven" class="echarts"></div>
       </el-card>
     </el-col>
-    <el-col :xs="24" :sm="24" :md="12" :lg="12">
-      <el-card>
-        <h3 class="text_center">七日消费类型总计</h3>
-        <div id="type" class="echarts"></div>
-      </el-card>
-    </el-col>
+    <el-col :xs="24" :sm="24" :md="12" :lg="12"></el-col>
   </el-row>
   <el-row class="second" :gutter="20">
-    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+    <el-col :xs="24" :sm="24" :md="18" :lg="18">
       <el-card>
         <h3 class="text_center">每周消费</h3>
         <div id="week" class="echarts"></div>
       </el-card>
     </el-col>
-    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+    <el-col :xs="24" :sm="24" :md="6" :lg="6">
       <el-card>
-        <!-- <h3 class="text_center">周账单</h3>
-        <div id="week"></div> -->
+        <h3 class="text_center">七日消费类型总计</h3>
+        <div id="type" class="echarts"></div>
       </el-card>
     </el-col>
   </el-row>
