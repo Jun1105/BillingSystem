@@ -16,7 +16,6 @@
   import { userStore } from '@/stores/user'
   import loading from '@/utils/loading'
   const user = userStore()
-  type EChartsOption = echarts.EChartsOption
 
   let sevenEChartsData = ref(null)
   let sevenPieData = ref(null)
@@ -27,6 +26,125 @@
   let sevenUnRef = null
   let pieUnRef = null
   let weekUnRef = null
+  let lineOption = {
+    tooltip: {
+      show: true,
+      formatter: '{b0}: ￥{c0}',
+      trigger: 'axis',
+      axisPointer: {
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: [],
+      axisLabel: {
+        rotate: -15,
+        margin: 15
+      }
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [],
+        type: 'line',
+        label: {
+          show: true,
+          position: 'top'
+        },
+        smooth: true
+      }
+    ]
+  }
+
+  let weekOption = {
+    tooltip: {
+      trigger: 'axis',
+      formatter: '总计: ￥{c0}',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: [],
+      axisLabel: {
+        rotate: -15,
+        margin: 15
+      }
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '总计',
+        data: [],
+        label: {
+          show: true,
+          fontSize: 13,
+          fontWeight: 'bold',
+          position: 'top'
+        },
+        type: 'bar'
+      }
+    ]
+  }
+
+  let pieOption = {
+    tooltip: {
+      trigger: 'item',
+      formatter: '总计: ￥{c0}'
+    },
+    legend: {
+      top: '5%',
+      left: 'center'
+    },
+    series: [
+      {
+        name: '类型',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '40',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: true,
+          normal: {
+            length: 15, // 指示线长度
+            lineStyle: {
+              color: '#595959' // 指示线颜色
+            }
+          }
+        },
+        label: {
+          show: true,
+          position: 'center',
+          normal: {
+            textStyle: {
+              color: '#595959', // 提示文字颜色
+              fontSize: 18 // 提示文字大小
+            }
+          }
+        },
+        data: []
+      }
+    ]
+  }
 
   const getSevenEcharts = async () => {
     const sevenChartDom = document.getElementById('seven')
@@ -56,59 +174,12 @@
         yData.push(item.totalAmount)
       })
     }
+    lineOption.xAxis.data = xData
+    lineOption.series[0].data = yData
+    lineOption.xAxis.axisLabel.rotate = xData.length > 15 ? -30 : 0
 
-    let option: EChartsOption
-    option = {
-      tooltip: {
-        show: true,
-        formatter: '{b0}: ￥{c0}',
-        trigger: 'axis',
-        axisPointer: {
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: xData,
-        axisLabel: {
-          rotate: -15,
-          margin: 15
-        }
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          data: yData,
-          type: 'line',
-          smooth: true
-        }
-      ]
-    }
-
-    sevenECharts.setOption(option)
+    sevenECharts.setOption(lineOption)
     window.addEventListener('resize', () => {
-      // // 重新设置echarts数据demo
-      // let option = {
-      //   xAxis: {
-      //     type: 'category',
-      //     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      //   },
-      //   yAxis: {
-      //     type: 'value'
-      //   },
-      //   series: [
-      //     {
-      //       data: [50, 30, 50, 20, 50, 40, 80],
-      //       type: 'line',
-      //       smooth: true
-      //     }
-      //   ]
-      // }
-      // sevenEChartsData.value.setOption(option)
       sevenEChartsData.value.resize()
     })
   }
@@ -119,8 +190,6 @@
 
     pieUnRef = sevenPieCharts
     sevenPieData.value = sevenPieCharts
-
-    let option: EChartsOption
 
     const seven = yesterday(null)
     const one = sevenBefore(seven)
@@ -140,47 +209,9 @@
         }
       })
     }
-
-    option = {
-      tooltip: {
-        trigger: 'item',
-        formatter: '总计: ￥{c0}'
-      },
-      legend: {
-        top: '5%',
-        left: 'center'
-      },
-      series: [
-        {
-          name: '类型',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '40',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data
-        }
-      ]
-    }
     // sevenPieData.value.setOption(option)
-    pieUnRef.setOption(option)
+    pieOption.series[0].data = data
+    pieUnRef.setOption(pieOption)
     window.addEventListener('resize', () => {
       pieUnRef.resize()
     })
@@ -210,35 +241,9 @@
       })
     }
 
-    let option: EChartsOption
-    option = {
-      tooltip: {
-        trigger: 'axis',
-        formatter: '总计: ￥{c0}',
-        axisPointer: {
-          type: 'shadow'
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: xData,
-        axisLabel: {
-          rotate: -15,
-          margin: 15
-        }
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          name: '总计',
-          data: yData,
-          type: 'bar'
-        }
-      ]
-    }
-    weekUnRef.setOption(option)
+    weekOption.xAxis.data = xData
+    weekOption.series[0].data = yData
+    weekUnRef.setOption(weekOption)
 
     window.addEventListener('resize', () => {
       weekUnRef.resize()
@@ -249,7 +254,6 @@
     if (value === '近七日') {
       const seven = yesterday(null)
       const one = sevenBefore(seven)
-
       setEchartsOption(one, seven)
     } else if (value === '本月') {
       const [start, end] = getCurrentMonth()
@@ -261,74 +265,6 @@
   }
 
   const setEchartsOption = async (start, end) => {
-    let lineOption = {
-      tooltip: {
-        show: true,
-        formatter: '{b0}: ￥{c0}',
-        trigger: 'axis',
-        axisPointer: {
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: [],
-        axisLabel: {
-          rotate: -15,
-          margin: 15
-        }
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          data: [],
-          type: 'line',
-          smooth: true
-        }
-      ]
-    }
-    let pieOption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: '总计: ￥{c0}'
-      },
-      legend: {
-        top: '5%',
-        left: 'center'
-      },
-      series: [
-        {
-          name: '类型',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '40',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: []
-        }
-      ]
-    }
     const line: any = await getOrderCount({
       userId: user.$state.userId,
       startDate: start,
@@ -343,6 +279,7 @@
       })
       lineOption.xAxis.data = xData
       lineOption.series[0].data = yData
+      lineOption.xAxis.axisLabel.rotate = xData.length > 15 ? -30 : 0
       // sevenEChartsData.value.setOption(lineOption)
       sevenUnRef.setOption(lineOption)
     }
@@ -362,7 +299,8 @@
         }
       })
       pieOption.series[0].data = data
-      sevenPieData.value.setOption(pieOption)
+      // sevenPieData.value.setOption(pieOption)
+      pieUnRef.setOption(pieOption)
     }
   }
 
@@ -391,7 +329,6 @@
         <div id="seven" class="echarts"></div>
       </el-card>
     </el-col>
-    <el-col :xs="24" :sm="24" :md="12" :lg="12"></el-col>
   </el-row>
   <el-row class="second" :gutter="20">
     <el-col :xs="24" :sm="24" :md="18" :lg="18">

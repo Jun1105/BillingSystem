@@ -7,6 +7,7 @@ import { userStore } from '@/stores/user'
 import { useMenuStore } from '@/stores/menu'
 import { getMenu } from '@/api/common'
 import menu from './routes/menu'
+import loading from '@/utils/loading'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const routes: any = [login, ...page]
@@ -28,8 +29,10 @@ router.beforeEach(async (to, from, next) => {
   if (user.userId && to.path !== '/login') {
     let data = null
     if (!whileList.includes(to.path)) {
+      loading(true)
       const res = await getMenu(user.userId)
       data = res.data
+      loading(false)
     }
     if (data) {
       useMenu.settingMenu(data)
