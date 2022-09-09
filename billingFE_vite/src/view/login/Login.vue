@@ -113,6 +113,9 @@
       left: 50%;
       transform: translate(-50%, -50%);
       width: 30%;
+      h3 {
+        text-align: center;
+      }
     }
   }
 </style>

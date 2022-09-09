@@ -66,7 +66,24 @@ function getCurrentMonth() {
   return [`${y}-${m}-01`, getDate(dd)]
 }
 
-// function getLastMonth() {}
+/**
+ * 获取上月日期
+ * @date 2022-09-09
+ * @returns {Array}
+ */
+function getLastMonth() {
+  const dd = new Date()
+  const m = dd.getMonth()
+  let y = dd.getFullYear()
+  y = m === 0 ? y - 1 : y
+
+  //获取本月天数
+  const day = new Date(y, m, 0).getDate()
+  const month = m === 0 ? '12' : m < 10 ? '0' + m : m + ''
+  const startDate = `${y}-${month}-01`
+  const endDate = `${y}-${month}-${day}`
+  return [startDate, endDate]
+}
 
 export {
   getDate,
@@ -75,5 +92,6 @@ export {
   getOneWeek,
   getWeek,
   sevenAfter,
-  getCurrentMonth
+  getCurrentMonth,
+  getLastMonth
 }

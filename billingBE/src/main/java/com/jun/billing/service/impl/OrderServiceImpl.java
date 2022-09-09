@@ -152,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
         List<LocalDate> weekPeriod = new ArrayList<>();
         long day = DAYS.between(startDate, endDate);
         weekPeriod.add(startDate);
-        for (int i = 0; i <= day; i++) {
+        for (int i = 0; i < day; i++) {
             LocalDate localDate = weekPeriod.get(i);
             weekPeriod.add(localDate.plusDays(1));
         }

@@ -17,6 +17,8 @@ const router = createRouter({
   routes
 })
 
+const whileList = ['/404']
+
 router.beforeEach(async (to, from, next) => {
   const user = userStore()
   const useMenu = useMenuStore()
@@ -25,9 +27,13 @@ router.beforeEach(async (to, from, next) => {
   // return false
 
   if (user.userId && to.path !== '/login') {
-    loading(true)
-    const { data } = await getMenu(user.userId)
-    loading(false)
+    let data = null
+    if (!whileList.includes(to.path)) {
+      loading(true)
+      const res = await getMenu(user.userId)
+      data = res.data
+      loading(false)
+    }
     if (data) {
       useMenu.settingMenu(data)
       const menuList = data.reduce((acc, item) => {

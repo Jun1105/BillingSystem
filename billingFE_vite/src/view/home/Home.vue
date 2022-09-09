@@ -4,9 +4,17 @@
 <script setup lang="ts">
   import * as echarts from 'echarts'
   import { onMounted, ref, markRaw } from 'vue'
-  import { yesterday, sevenBefore, sevenAfter, getWeek } from '@/utils/date'
+  import {
+    yesterday,
+    sevenBefore,
+    sevenAfter,
+    getWeek,
+    getCurrentMonth,
+    getLastMonth
+  } from '@/utils/date'
   import { getOrderCount, getTypeCount, getWeekOrder } from '@/api/order'
   import { userStore } from '@/stores/user'
+  import loading from '@/utils/loading'
   const user = userStore()
   type EChartsOption = echarts.EChartsOption
 
@@ -14,21 +22,32 @@
   let sevenPieData = ref(null)
   let weekEChartsData = ref(null)
 
+  const monthSelect = ref('近七日')
+
+  let sevenUnRef = null
+  let pieUnRef = null
+  let weekUnRef = null
+
   const getSevenEcharts = async () => {
     const sevenChartDom = document.getElementById('seven')
 
     let sevenECharts = echarts.init(sevenChartDom)
 
+    //vue3一个坑：echarts动态渲染的数据不能是响应式的
+    sevenUnRef = markRaw(sevenECharts)
+
     sevenEChartsData.value = sevenECharts
 
     const seven = yesterday(null)
     const one = sevenBefore(seven)
+    loading(true)
 
     const res: any = await getOrderCount({
       userId: user.$state.userId,
       startDate: one,
       endDate: seven
     })
+    loading(false)
     let xData = []
     let yData = []
     if (res.code === 0) {
@@ -98,6 +117,7 @@
     const sevenPieDom = document.getElementById('type')
     let sevenPieCharts = echarts.init(sevenPieDom)
 
+    pieUnRef = sevenPieCharts
     sevenPieData.value = sevenPieCharts
 
     let option: EChartsOption
@@ -159,9 +179,10 @@
         }
       ]
     }
-    sevenPieData.value.setOption(option)
+    // sevenPieData.value.setOption(option)
+    pieUnRef.setOption(option)
     window.addEventListener('resize', () => {
-      sevenPieData.value.resize()
+      pieUnRef.resize()
     })
   }
 
@@ -170,7 +191,7 @@
 
     let weekECharts = echarts.init(weekChartDom)
 
-    const week = markRaw(weekECharts)
+    weekUnRef = markRaw(weekECharts)
 
     weekEChartsData.value = weekECharts
 
@@ -217,11 +238,132 @@
         }
       ]
     }
-    week.setOption(option)
+    weekUnRef.setOption(option)
 
     window.addEventListener('resize', () => {
-      week.resize()
+      weekUnRef.resize()
     })
+  }
+
+  const handleRadioChange = async value => {
+    if (value === '近七日') {
+      const seven = yesterday(null)
+      const one = sevenBefore(seven)
+
+      setEchartsOption(one, seven)
+    } else if (value === '本月') {
+      const [start, end] = getCurrentMonth()
+      setEchartsOption(start, end)
+    } else if (value === '上月') {
+      const [start, end] = getLastMonth()
+      setEchartsOption(start, end)
+    }
+  }
+
+  const setEchartsOption = async (start, end) => {
+    let lineOption = {
+      tooltip: {
+        show: true,
+        formatter: '{b0}: ￥{c0}',
+        trigger: 'axis',
+        axisPointer: {
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: [],
+        axisLabel: {
+          rotate: -15,
+          margin: 15
+        }
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          type: 'line',
+          smooth: true
+        }
+      ]
+    }
+    let pieOption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: '总计: ￥{c0}'
+      },
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
+      series: [
+        {
+          name: '类型',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: []
+        }
+      ]
+    }
+    const line: any = await getOrderCount({
+      userId: user.$state.userId,
+      startDate: start,
+      endDate: end
+    })
+    let xData = []
+    let yData = []
+    if (line.code === 0) {
+      line.data.forEach(item => {
+        xData.push(item.date)
+        yData.push(item.totalAmount)
+      })
+      lineOption.xAxis.data = xData
+      lineOption.series[0].data = yData
+      // sevenEChartsData.value.setOption(lineOption)
+      sevenUnRef.setOption(lineOption)
+    }
+
+    const pie: any = await getTypeCount({
+      userId: user.$state.userId,
+      startDate: start,
+      endDate: end
+    })
+
+    let data = []
+    if (pie.code === 0) {
+      data = pie.data.map(item => {
+        return {
+          name: item.typeName,
+          value: item.totalAmount
+        }
+      })
+      pieOption.series[0].data = data
+      sevenPieData.value.setOption(pieOption)
+    }
   }
 
   onMounted(async () => {
@@ -234,7 +376,18 @@
   <el-row class="home" :gutter="20">
     <el-col :xs="24" :sm="24" :md="24" :lg="24">
       <el-card>
-        <h3 class="text_center">每日支出</h3>
+        <div>
+          <h3 class="text_center">每日支出</h3>
+          <el-radio-group
+            v-model="monthSelect"
+            class="radio-group"
+            @change="handleRadioChange"
+          >
+            <el-radio-button label="近七日">近七日</el-radio-button>
+            <el-radio-button label="本月">本月</el-radio-button>
+            <el-radio-button label="上月">上月</el-radio-button>
+          </el-radio-group>
+        </div>
         <div id="seven" class="echarts"></div>
       </el-card>
     </el-col>
@@ -249,7 +402,7 @@
     </el-col>
     <el-col :xs="24" :sm="24" :md="6" :lg="6">
       <el-card>
-        <h3 class="text_center">七日消费类型总计</h3>
+        <h3 class="text_center">{{ monthSelect }}消费类型总计</h3>
         <div id="type" class="echarts"></div>
       </el-card>
     </el-col>

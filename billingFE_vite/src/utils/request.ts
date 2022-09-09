@@ -1,5 +1,6 @@
 /** @format */
 
+import router from '@/routers'
 import axios, { AxiosRequestConfig } from 'axios'
 
 type axiosRequestConfig = AxiosRequestConfig
@@ -31,6 +32,10 @@ service.interceptors.response.use(
   response => {
     //返回数据
     const res = response.data
+    if (res.code < 0) {
+      router.push('/404')
+    }
+
     return res
   },
   error => {
