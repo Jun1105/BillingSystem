@@ -1,6 +1,7 @@
 package com.jun.billing.service.impl;
 
 import com.jun.billing.dao.CommonMapper;
+import com.jun.billing.entity.pojo.Role;
 import com.jun.billing.entity.pojo.Type;
 import com.jun.billing.service.CommonService;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,10 @@ public class CommonServiceImpl implements CommonService {
         }
         commonMapper.updateTypeName(typeO);
         return true;
+    }
+
+    @Override
+    public List<Role> getRole() {
+        return commonMapper.getRole();
     }
 }

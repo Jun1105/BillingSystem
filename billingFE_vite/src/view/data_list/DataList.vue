@@ -94,6 +94,8 @@
                 type: 'error',
                 message: '添加失败！类型已存在！'
               })
+              typeForm.id = null
+              isClick.value = true
               formEl.resetFields()
             }
           })

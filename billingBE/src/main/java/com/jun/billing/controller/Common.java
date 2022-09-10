@@ -27,4 +27,9 @@ public class Common {
     public Result updateType(@RequestBody Type typeO){
         return Result.success("success", commonService.updateTypeName(typeO));
     }
+
+    @GetMapping("/getRole")
+    public Result getRole(){
+        return Result.success("success", commonService.getRole());
+    }
 }

@@ -7,7 +7,8 @@ import javax.annotation.Resource;
 @Resource
 @Data
 public class User {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
+    private Integer role_id;
 }

@@ -1,10 +1,8 @@
 package com.jun.billing.dao;
 
+import com.jun.billing.entity.pojo.Role;
 import com.jun.billing.entity.pojo.Type;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -16,6 +14,9 @@ public interface CommonMapper {
     @Insert("insert into type(name) values(#{req.name})")
     void addTypeName(@Param("req") Type typeO);
 
-    @Insert("update type set type.name = #{req.name} where type.id = #{req.id}")
+    @Update("update type set type.name = #{req.name} where type.id = #{req.id}")
     void updateTypeName(@Param("req") Type typeO);
+
+    @Select("select id, role_name from role")
+    List<Role> getRole();
 }

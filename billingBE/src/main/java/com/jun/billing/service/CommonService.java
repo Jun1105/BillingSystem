@@ -1,5 +1,6 @@
 package com.jun.billing.service;
 
+import com.jun.billing.entity.pojo.Role;
 import com.jun.billing.entity.pojo.Type;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface CommonService {
     Boolean addTypeName(Type typeO);
 
     Boolean updateTypeName(Type typeO);
+
+    List<Role> getRole();
 }

@@ -14,4 +14,11 @@ function getType() {
   })
 }
 
-export { getMenu, getType }
+function getRole() {
+  return request({
+    url: '/getRole',
+    method: 'get'
+  })
+}
+
+export { getMenu, getType, getRole }

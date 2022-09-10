@@ -79,7 +79,11 @@
         status-icon
       >
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="ruleForm.username" />
+          <el-input
+            v-model="ruleForm.username"
+            placeholder="please input name"
+            clearable
+          />
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input

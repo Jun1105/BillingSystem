@@ -4,6 +4,7 @@ import com.jun.billing.entity.pojo.User;
 import com.jun.billing.service.UserService;
 import com.jun.billing.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ public class Login {
     @Autowired
     public UserService userService;
 
-    @PostMapping("/getAllUser")
+    @GetMapping("/getAllUser")
     public Result getAllUser(){
         return Result.success("success", userService.getAllUser());
     }
