@@ -16,4 +16,22 @@ public class CommonServiceImpl implements CommonService {
     public List<Type> getTypeList() {
         return commonMapper.getType();
     }
+
+    @Override
+    public Boolean addTypeName(Type typeO) {
+        if(typeO.getName() == null || typeO.getId() != null){
+            return false;
+        }
+        commonMapper.addTypeName(typeO);
+        return true;
+    }
+
+    @Override
+    public Boolean updateTypeName(Type typeO) {
+        if(typeO.getName() == null || typeO.getId() == null){
+            return false;
+        }
+        commonMapper.updateTypeName(typeO);
+        return true;
+    }
 }

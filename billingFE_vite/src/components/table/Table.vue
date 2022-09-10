@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-default-prop -->
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   import { T } from 'unimport/dist/types-43c63a16'
@@ -5,13 +6,16 @@
   interface Props {
     tableData: Array<T>
     tableColumn: Array<T>
-    total: number
+    isPagination?: boolean
+    total?: number
     handleSortChange?: any
     handleCurrentChange?: any
     handleCurrentRowChange?: any
     handleSizeChange?: any
   }
-  const props = defineProps<Props>()
+  const props = withDefaults(defineProps<Props>(), {
+    isPagination: () => true
+  })
 
   const currentPage = ref(1)
   const pageSize = ref(10)
@@ -38,11 +42,12 @@
     </template>
   </el-table>
   <el-pagination
+    v-if="props.isPagination"
     v-model:currentPage="currentPage"
     v-model:page-size="pageSize"
     :page-sizes="[10, 20, 40, 100]"
     layout="total, sizes, prev, pager, next, jumper"
-    :total="props.total"
+    :total="props.total || 0"
     @size-change="props.handleSizeChange(currentPage, pageSize)"
     @current-change="props.handleCurrentChange(currentPage, pageSize)"
   />

@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface CommonService {
     List<Type> getTypeList();
+
+    Boolean addTypeName(Type typeO);
+
+    Boolean updateTypeName(Type typeO);
 }
