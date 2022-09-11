@@ -73,7 +73,6 @@
       type: 'category',
       data: [],
       axisLabel: {
-        rotate: -15,
         margin: 15
       }
     },

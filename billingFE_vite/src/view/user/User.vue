@@ -1,7 +1,7 @@
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   import { getRole } from '@/api/common'
-  import { FormInstance, FormRules } from 'element-plus'
+  import { ElMessage, FormInstance, FormRules } from 'element-plus'
   import { onMounted, reactive, ref } from 'vue'
   import { Edit } from '@element-plus/icons-vue'
   import { addUser, getAllUser, updateUser } from '@/api/login'
@@ -73,12 +73,16 @@
                 message: '修改成功！'
               })
               getAllUserRole()
+              userForm.id = null
+              isClick.value = true
               formEl.resetFields()
             } else {
               ElMessage({
                 type: 'error',
                 message: '修改失败！'
               })
+              userForm.id = null
+              isClick.value = true
               formEl.resetFields()
             }
           })

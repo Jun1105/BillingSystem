@@ -18,7 +18,7 @@ public class DateUtil {
         LocalDate localDate = LocalDate.now();
         LocalDate todayOfLastWeek = localDate.minusDays(7*n);
         LocalDate monday = todayOfLastWeek.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
-        LocalDate sunday = todayOfLastWeek.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        LocalDate sunday = monday.plusDays(6);
         List<LocalDate> localDates = new ArrayList<>();
         localDates.add(monday);
         localDates.add(sunday);
@@ -26,15 +26,16 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        List<LocalDate> lastDate = getLastDate(4);
-        List<LocalDate> lastDate1 = getLastDate(4);
-        System.out.println(lastDate.get(0).isBefore(lastDate1.get(0)));
+        List<LocalDate> lastDate = getLastDate(2);
+        List<LocalDate> lastDate1 = getLastDate(1);
+//        System.out.println(lastDate);
+//        System.out.println(lastDate1);
+//        System.out.println(lastDate.get(0).isBefore(lastDate1.get(0)));
         LocalDate day0 = LocalDate.of(2022, 8, 29);
-        System.out.println(day0.toString());
+//        System.out.println(day0.toString());
 
         LocalDate day1 = LocalDate.of(2022, 9, 4);
-        System.out.println(day1.toString());
-
-        System.out.println(DAYS.between(day0, day1));
+//        System.out.println(day1.toString());
+//        System.out.println(DAYS.between(day0, day1));
     }
 }
