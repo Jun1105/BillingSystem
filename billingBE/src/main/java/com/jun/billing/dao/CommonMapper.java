@@ -2,6 +2,7 @@ package com.jun.billing.dao;
 
 import com.jun.billing.entity.pojo.Role;
 import com.jun.billing.entity.pojo.Type;
+import com.jun.billing.entity.vo.RoleMenuRequest;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

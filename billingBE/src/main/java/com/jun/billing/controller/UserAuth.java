@@ -1,5 +1,6 @@
 package com.jun.billing.controller;
 
+import com.jun.billing.entity.pojo.User;
 import com.jun.billing.entity.pojo.UserRole;
 import com.jun.billing.entity.vo.RoleMenuRequest;
 import com.jun.billing.service.MenuService;
@@ -17,9 +18,14 @@ public class UserAuth {
     public MenuService menuService;
     @Autowired
     UserService userService;
-    @PostMapping("/getMenu/{userId}")
-    public Result getMenu(@PathVariable Integer userId){
-        return Result.success("success",menuService.getMenu(userId));
+    @PostMapping("/getMenu")
+    public Result getMenu(@RequestBody User user){
+        return Result.success("success",menuService.getMenu(user));
+    }
+
+    @PostMapping("/getAllMenu")
+    public Result getAllMenu(){
+        return Result.success("success",menuService.getAllMenu());
     }
 
     @PostMapping("/addUser")

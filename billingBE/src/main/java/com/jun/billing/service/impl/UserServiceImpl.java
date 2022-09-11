@@ -10,6 +10,7 @@ import com.jun.billing.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,7 +59,18 @@ public class UserServiceImpl implements UserService {
         if(roleMenuRequest.getRoleId() == null){
             return false;
         }
-        return false;
+        List<RoleMenu> roleMenus = new ArrayList<>();
+        roleMenuRequest.getMenuIdList().stream().forEach(o->{
+            RoleMenu roleMenu = new RoleMenu();
+            roleMenu.setRole_id(roleMenuRequest.getRoleId());
+            roleMenu.setMenu_id(o);
+            roleMenus.add(roleMenu);
+        });
+        userMapper.deleteRoleMenu(roleMenuRequest);
+        if(roleMenus.size() != 0){
+            userMapper.insertRoleMenus(roleMenus);
+        }
+        return true;
     }
 
     @Override

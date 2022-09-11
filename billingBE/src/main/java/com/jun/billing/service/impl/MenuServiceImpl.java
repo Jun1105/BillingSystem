@@ -3,6 +3,7 @@ package com.jun.billing.service.impl;
 import com.jun.billing.dao.UserMapper;
 import com.jun.billing.entity.dto.MenuDto;
 import com.jun.billing.entity.pojo.Menu;
+import com.jun.billing.entity.pojo.User;
 import com.jun.billing.service.MenuService;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,18 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     @Resource
     public UserMapper userMapper;
+
     @Override
-    public List<MenuDto> getMenu(Integer userId) {
-        if(userId == null){
+    public List<MenuDto> getAllMenu() {
+        return getNewMenu(userMapper.getAllMenu());
+    }
+
+    @Override
+    public List<MenuDto> getMenu(User user) {
+        if(user.getId() == null){
             return null;
         }
-        List<Menu> menu = userMapper.getMenu(userId);
+        List<Menu> menu = userMapper.getMenu(user.getId());
         if(menu.size() == 0){
             return null;
         }

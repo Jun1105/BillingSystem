@@ -2,22 +2,24 @@
 <!-- eslint-disable vue/require-explicit-emits -->
 <script setup lang="ts">
   import { T } from 'unimport/dist/types-43c63a16'
-  import { reactive, ref } from 'vue'
-  import type { ElTree, FormInstance, FormRules } from 'element-plus'
+  import { onMounted, reactive, ref } from 'vue'
+  import { ElMessage, ElTree, FormInstance, FormRules } from 'element-plus'
   import loading from '@/utils/loading'
   import { useMenuStore } from '@/stores/menu'
-  import { searchRoleMenu } from '@/api/common'
+  import { getAllMenu, getMenu, searchRoleMenu, updateRole } from '@/api/common'
+  import { userStore } from '@/stores/user'
 
   interface Props {
     dialogFormVisible: boolean
     roleList: Array<T>
   }
 
+  const user = userStore()
   const props = defineProps<Props>()
   const $emit = defineEmits(['closeDialog', 'confirmDialog'])
 
   const useMenu = useMenuStore()
-  const menuList = useMenu.menuList
+  const menuList = ref([])
   const treeRef = ref<InstanceType<typeof ElTree>>()
 
   const defaultProps = {
@@ -36,15 +38,29 @@
     roleId: [{ required: true, message: 'Please select role', trigger: 'blur' }]
   })
 
+  onMounted(() => {
+    getMenuList()
+  })
+
+  const getMenuList = async () => {
+    const menuData: any = await getAllMenu()
+    if (menuData.code === 0) {
+      menuList.value = menuData.data
+    }
+  }
+
   const handleChange = async val => {
     const res: any = await searchRoleMenu({ roleId: val })
     if (res.code === 0) {
       const nodeKeys = res.data.map(item => item.menu_id)
-      treeRef.value?.setCheckedKeys(nodeKeys)
+      nodeKeys.forEach(item => {
+        treeRef.value?.setChecked(item, true, false)
+      })
     }
   }
 
   const clearForm = () => {
+    treeRef.value?.setCheckedKeys([])
     form.value = {
       roleId: null,
       menuIdList: []
@@ -68,11 +84,24 @@
           treeRef.value?.getCheckedKeys(),
           treeRef.value?.getHalfCheckedKeys()
         )
-        console.log(form.value)
-        // loading(true)
-        // loading(false)
-        // clearForm()
-        // $emit('closeDialog', false, 'confirm')
+        loading(true)
+        const res: any = await updateRole(form.value)
+        if (res.code === 0 && res.data) {
+          ElMessage({
+            type: 'success',
+            message: '权限修改成功!'
+          })
+        } else {
+          ElMessage({
+            type: 'error',
+            message: '权限修改失败!'
+          })
+        }
+        const result = await getMenu({ id: user.userId })
+        useMenu.settingMenu(result.data)
+        clearForm()
+        $emit('closeDialog', false, 'confirm')
+        loading(false)
       } else {
         console.log('error submit!', fields)
       }

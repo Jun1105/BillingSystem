@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
   if (user.userId && to.path !== '/login') {
     let data = null
     if (!whileList.includes(to.path)) {
-      const res = await getMenu(user.userId)
+      const res = await getMenu({ id: user.userId })
       data = res.data
     }
     if (data) {

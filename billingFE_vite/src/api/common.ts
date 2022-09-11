@@ -1,8 +1,18 @@
 import request from '@/utils/request'
 
-function getMenu(userId) {
+function getMenu(body) {
   return request({
-    url: `/getMenu/${userId}`,
+    url: '/getMenu',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+function getAllMenu() {
+  return request({
+    url: '/getAllMenu',
     method: 'post'
   })
 }
@@ -31,4 +41,14 @@ function searchRoleMenu(body) {
   })
 }
 
-export { getMenu, getType, getRole, searchRoleMenu }
+function updateRole(body) {
+  return request({
+    url: '/updateRole',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+export { getMenu, getAllMenu, getType, getRole, searchRoleMenu, updateRole }

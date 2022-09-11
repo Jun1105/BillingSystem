@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class RoleMenuRequest {
     private Integer roleId;
-    private List<Integer> menuList;
+    private List<Integer> menuIdList;
 }
