@@ -21,4 +21,14 @@ function getRole() {
   })
 }
 
-export { getMenu, getType, getRole }
+function searchRoleMenu(body) {
+  return request({
+    url: '/roleMenu',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+export { getMenu, getType, getRole, searchRoleMenu }

@@ -6,6 +6,7 @@
   import { Edit } from '@element-plus/icons-vue'
   import { addUser, getAllUser, updateUser } from '@/api/login'
   import loading from '@/utils/loading'
+  import DialogFormVue from './component/DialogForm.vue'
 
   const formRef = ref<FormInstance>()
   const userForm = reactive({
@@ -144,6 +145,16 @@
       })
     }
   }
+
+  const dialogFormVisible = ref(false)
+
+  const handleRole = () => {
+    dialogFormVisible.value = true
+  }
+
+  const handleCloseDialog = value => {
+    dialogFormVisible.value = value
+  }
 </script>
 <template>
   <el-card>
@@ -160,7 +171,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="4">
-          <el-form-item label="类型：" prop="roleId">
+          <el-form-item label="角色：" prop="roleId">
             <el-select
               v-model="userForm.roleId"
               placeholder="please select role"
@@ -187,6 +198,9 @@
           >
             修改
           </el-button>
+          <el-button type="primary" :icon="Edit" @click="handleRole">
+            权限管理
+          </el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -199,5 +213,10 @@
       :is-pagination="false"
     />
   </el-card>
+  <DialogFormVue
+    :dialog-form-visible="dialogFormVisible"
+    @close-dialog="handleCloseDialog"
+    :role-list="roleList"
+  />
 </template>
 <style lang="scss"></style>

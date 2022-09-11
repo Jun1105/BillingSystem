@@ -1,9 +1,7 @@
 package com.jun.billing.dao;
 
-import com.jun.billing.entity.pojo.Menu;
-import com.jun.billing.entity.pojo.User;
-import com.jun.billing.entity.pojo.UserAdd;
-import com.jun.billing.entity.pojo.UserRole;
+import com.jun.billing.entity.pojo.*;
+import com.jun.billing.entity.vo.RoleMenuRequest;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -22,4 +20,7 @@ public interface UserMapper {
 
     @Update("update user set user.username = #{req.username}, user.role_id = #{req.role_id} where user.id = #{req.id}")
     void updateUser(@Param("req") UserAdd userAdd);
+
+    @Select("select role_id,menu_id from role_menu where role_id = #{role.roleId}")
+    List<RoleMenu> roleMenu(@Param("role") RoleMenuRequest role);
 }

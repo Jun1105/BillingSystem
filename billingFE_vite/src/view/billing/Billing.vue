@@ -146,8 +146,6 @@
   const handleCloseDialog = (value, confirm) => {
     action.value = ''
     dialogFormVisible.value = value
-    console.log(confirm)
-
     if (confirm === 'confirm') {
       getOrderData({ userId: user.$state.userId })
     }

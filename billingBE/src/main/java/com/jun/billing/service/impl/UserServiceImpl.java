@@ -1,9 +1,11 @@
 package com.jun.billing.service.impl;
 
 import com.jun.billing.dao.UserMapper;
+import com.jun.billing.entity.pojo.RoleMenu;
 import com.jun.billing.entity.pojo.User;
 import com.jun.billing.entity.pojo.UserAdd;
 import com.jun.billing.entity.pojo.UserRole;
+import com.jun.billing.entity.vo.RoleMenuRequest;
 import com.jun.billing.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,22 @@ public class UserServiceImpl implements UserService {
         userAdd.setId(userRole.getId());
         userMapper.updateUser(userAdd);
         return true;
+    }
+
+    @Override
+    public Boolean updateRoleMenu(RoleMenuRequest roleMenuRequest) {
+        if(roleMenuRequest.getRoleId() == null){
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public List<RoleMenu> roleMenu(RoleMenuRequest roleMenuRequest) {
+        if(roleMenuRequest.getRoleId() == null){
+            return null;
+        }
+        List<RoleMenu> roleMenus = userMapper.roleMenu(roleMenuRequest);
+        return roleMenus;
     }
 }

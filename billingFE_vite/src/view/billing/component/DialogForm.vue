@@ -102,7 +102,7 @@
   }
 </script>
 <template>
-  <el-dialog :model-value="props.dialogFormVisible" title="Shipping address">
+  <el-dialog :model-value="props.dialogFormVisible" title="添加账单">
     <el-form ref="formRef" :model="form" :rules="rules">
       <el-form-item label="类型：" prop="typeId">
         <el-select v-model="form.typeId" placeholder="please select type">

@@ -1,6 +1,7 @@
 package com.jun.billing.controller;
 
 import com.jun.billing.entity.pojo.UserRole;
+import com.jun.billing.entity.vo.RoleMenuRequest;
 import com.jun.billing.service.MenuService;
 import com.jun.billing.service.UserService;
 import com.jun.billing.utils.Result;
@@ -29,5 +30,15 @@ public class UserAuth {
     @PostMapping("/updateUser")
     public Result updateUser(@RequestBody UserRole userRole){
         return Result.success("success", userService.updateUser(userRole));
+    }
+
+    @PostMapping("/updateRole")
+    public Result updateRole(@RequestBody RoleMenuRequest roleMenuRequest){
+        return Result.success("success", userService.updateRoleMenu(roleMenuRequest));
+    }
+
+    @PostMapping("/roleMenu")
+    public Result searchRole(@RequestBody RoleMenuRequest roleMenuRequest){
+        return Result.success("success", userService.roleMenu(roleMenuRequest));
     }
 }
