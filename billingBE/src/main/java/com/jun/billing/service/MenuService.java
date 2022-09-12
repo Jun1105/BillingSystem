@@ -10,4 +10,8 @@ import java.util.List;
 public interface MenuService {
     List<MenuDto> getAllMenu();
     List<MenuDto> getMenu(User user);
+
+    Boolean addMenu(Menu menu);
+    Boolean updateMenu(Menu menu);
+    Boolean deleteMenu(Menu menu);
 }

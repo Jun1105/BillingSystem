@@ -81,7 +81,7 @@
         <el-form-item label="用户名" prop="username">
           <el-input
             v-model="ruleForm.username"
-            placeholder="please input name"
+            placeholder="please input username"
             clearable
           />
         </el-form-item>
@@ -89,6 +89,8 @@
           <el-input
             type="password"
             show-password
+            placeholder="please input password"
+            clearable
             v-model="ruleForm.password"
             @keyup.enter="submitForm(formRef)"
           />

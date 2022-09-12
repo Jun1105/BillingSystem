@@ -1,5 +1,6 @@
 package com.jun.billing.service.impl;
 
+import com.jun.billing.dao.MenuMapper;
 import com.jun.billing.dao.UserMapper;
 import com.jun.billing.entity.dto.MenuDto;
 import com.jun.billing.entity.pojo.Menu;
@@ -15,6 +16,8 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     @Resource
     public UserMapper userMapper;
+    @Resource
+    public MenuMapper menuMapper;
 
     @Override
     public List<MenuDto> getAllMenu() {
@@ -33,10 +36,37 @@ public class MenuServiceImpl implements MenuService {
         return getNewMenu(menu);
     }
 
+    @Override
+    public Boolean addMenu(Menu menu) {
+        if(menu.getTitle() == null || menu.getId() != null){
+            return false;
+        }
+        menuMapper.addMenu(menu);
+        return true;
+    }
+
+    @Override
+    public Boolean updateMenu(Menu menu) {
+        if(menu.getTitle() == null || menu.getId() == null){
+            return false;
+        }
+        menuMapper.updateMenu(menu);
+        return true;
+    }
+
+    @Override
+    public Boolean deleteMenu(Menu menu) {
+        if(menu.getId() == null){
+            return  false;
+        }
+        menuMapper.deleteMenu(menu.getId());
+        return true;
+    }
+
     public List<MenuDto> getNewMenu(List<Menu> menus){
         List<MenuDto> menuList = new ArrayList<>();
         menus.stream().forEach(o-> {
-            if(o.getPid() == 0){
+            if(o.getPid() == null){
                 List<Menu> children = new ArrayList<>();
                 MenuDto menuDto = new MenuDto(o.getId(),o.getTitle(),o.getMenu_name(), children);
                 menuList.add(menuDto);

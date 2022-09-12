@@ -28,6 +28,7 @@ public class DateUtil {
     public static void main(String[] args) {
         List<LocalDate> lastDate = getLastDate(2);
         List<LocalDate> lastDate1 = getLastDate(1);
+        System.out.println(null == null);
 //        System.out.println(lastDate);
 //        System.out.println(lastDate1);
 //        System.out.println(lastDate.get(0).isBefore(lastDate1.get(0)));

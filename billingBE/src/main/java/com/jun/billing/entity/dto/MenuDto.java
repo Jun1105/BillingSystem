@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class MenuDto {
-    private int id;
+    private Integer id;
     private String title;
     private String menu_name;
     private List<Menu> children;
