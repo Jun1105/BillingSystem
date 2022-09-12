@@ -83,6 +83,7 @@
             v-model="ruleForm.username"
             placeholder="please input username"
             clearable
+            maxlength="18"
           />
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -91,6 +92,7 @@
             show-password
             placeholder="please input password"
             clearable
+            maxlength="18"
             v-model="ruleForm.password"
             @keyup.enter="submitForm(formRef)"
           />

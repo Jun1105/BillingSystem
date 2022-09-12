@@ -24,4 +24,9 @@ public class Login {
     public Result getUser(@RequestBody User user){
         return Result.success("success",userService.getUser(user.getUsername(), user.getPassword()));
     }
+
+    @PostMapping("/updatePassword")
+    public Result updatePassword(@RequestBody User user){
+        return Result.success("success",userService.updatePassword(user));
+    }
 }

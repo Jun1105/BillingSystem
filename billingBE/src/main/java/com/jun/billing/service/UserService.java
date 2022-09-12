@@ -18,4 +18,6 @@ public interface UserService {
     Boolean updateRoleMenu(RoleMenuRequest roleMenuRequest);
 
     List<RoleMenu> roleMenu(RoleMenuRequest roleMenuRequest);
+
+    Boolean updatePassword(User user);
 }

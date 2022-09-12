@@ -20,6 +20,7 @@
   let sevenEChartsData = ref(null)
   let sevenPieData = ref(null)
   let weekEChartsData = ref(null)
+  let totalAmount = ref(null)
 
   const monthSelect = ref('近七日')
 
@@ -145,6 +146,16 @@
     ]
   }
 
+  const calculateTotal = data => {
+    let total = 0
+    if (data.length !== 0) {
+      data.forEach(v => {
+        total += v.totalAmount
+      })
+    }
+    totalAmount.value = total
+  }
+
   const getSevenEcharts = async () => {
     const sevenChartDom = document.getElementById('seven')
 
@@ -172,6 +183,7 @@
         xData.push(item.date)
         yData.push(item.totalAmount)
       })
+      calculateTotal(res.data)
     }
     lineOption.xAxis.data = xData
     lineOption.series[0].data = yData
@@ -276,6 +288,7 @@
         xData.push(item.date)
         yData.push(item.totalAmount)
       })
+      calculateTotal(line.data)
       lineOption.xAxis.data = xData
       lineOption.series[0].data = yData
       lineOption.xAxis.axisLabel.rotate = xData.length > 15 ? -30 : 0
@@ -314,7 +327,7 @@
     <el-col :xs="24" :sm="24" :md="24" :lg="24">
       <el-card>
         <div>
-          <h3 class="text_center">每日支出</h3>
+          <h3 class="text_center">每日支出 总计:￥{{ totalAmount }}</h3>
           <el-radio-group
             v-model="monthSelect"
             class="radio-group"

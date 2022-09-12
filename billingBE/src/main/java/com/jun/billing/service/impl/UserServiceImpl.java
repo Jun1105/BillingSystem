@@ -81,4 +81,13 @@ public class UserServiceImpl implements UserService {
         List<RoleMenu> roleMenus = userMapper.roleMenu(roleMenuRequest);
         return roleMenus;
     }
+
+    @Override
+    public Boolean updatePassword(User user) {
+        if(user.getPassword() == null || user.getId() == null){
+            return false;
+        }
+        userMapper.updatePassword(user);
+        return true;
+    }
 }

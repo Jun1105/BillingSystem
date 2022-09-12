@@ -1,5 +1,7 @@
 <script lang="ts" setup>
   import { userStore } from '@/stores/user'
+  import { ref } from 'vue'
+  import DialogFormVue from './DialogForm.vue'
   const user = userStore()
   const handleGitHub = () => {
     window.open('https://github.com/Jun1105/BillingSystem')
@@ -8,6 +10,14 @@
     user.removeUser()
     window.sessionStorage.clear()
     window.location.reload()
+  }
+  const handleUpdatePassword = () => {
+    dialogFormVisible.value = true
+  }
+
+  const dialogFormVisible = ref(false)
+  const handleCloseDialog = value => {
+    dialogFormVisible.value = value
   }
 </script>
 <template>
@@ -42,6 +52,9 @@
             />
             <template #dropdown>
               <el-dropdown-menu>
+                <el-dropdown-item @click="handleUpdatePassword">
+                  修改密码
+                </el-dropdown-item>
                 <el-dropdown-item @click="handleExit">退出</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -50,6 +63,10 @@
       </el-row>
     </el-col>
   </el-row>
+  <DialogFormVue
+    :dialog-form-visible="dialogFormVisible"
+    @close-dialog="handleCloseDialog"
+  />
 </template>
 <style lang="scss">
   .el-row-header {

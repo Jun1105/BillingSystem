@@ -39,4 +39,14 @@ function updateUser(body) {
   })
 }
 
-export { login, getAllUser, addUser, updateUser }
+function updatePassword(body) {
+  return request({
+    url: '/updatePassword',
+    method: 'post',
+    data: {
+      ...body
+    }
+  })
+}
+
+export { login, getAllUser, addUser, updateUser, updatePassword }

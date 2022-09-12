@@ -29,4 +29,7 @@ public interface UserMapper {
     void deleteRoleMenu(@Param("role") RoleMenuRequest roleMenuRequest);
 
     void insertRoleMenus(@Param("roleMenuList") List<RoleMenu> roleMenus);
+
+    @Update("update user set user.password = #{req.password} where user.id = #{req.id}")
+    void updatePassword(@Param("req") User user);
 }
