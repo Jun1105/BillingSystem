@@ -107,6 +107,17 @@
           <el-button @click="resetForm(formRef)">Reset</el-button>
         </el-form-item>
       </el-form>
+      <h6>
+        <el-tooltip
+          effect="dark"
+          content="jun1806068039@163.com"
+          placement="bottom"
+        >
+          <el-button class="box-item" size="small">
+            若无账号，请联系管理员！
+          </el-button>
+        </el-tooltip>
+      </h6>
     </el-card>
   </div>
 </template>
@@ -126,6 +137,12 @@
       width: 30%;
       h3 {
         text-align: center;
+      }
+      h6 {
+        text-align: center;
+        .box-item {
+          color: red;
+        }
       }
     }
   }
