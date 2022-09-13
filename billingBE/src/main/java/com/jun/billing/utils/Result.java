@@ -26,4 +26,12 @@ public class Result<T> implements Serializable {
         return result;
     }
 
+    public static <T> Result<T> errorToken(String msg){
+        Result<T> result = new Result<>();
+        result.setCode(-5);
+        result.setMsg(msg);
+        result.setData(null);
+        return result;
+    }
+
 }

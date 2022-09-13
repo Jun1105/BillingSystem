@@ -15,6 +15,13 @@ public class MyExceptionHandler {
         e.printStackTrace();
         return Result.error("获取失败");
     }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    @ResponseBody
+    public Result runtimeExceptionHandler(Exception e){
+        e.printStackTrace();
+        return Result.errorToken("token失效，请重新登录！");
+    }
 }
 
 

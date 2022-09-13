@@ -2,6 +2,7 @@
 
 import router from '@/routers'
 import axios, { AxiosRequestConfig } from 'axios'
+import { ElMessage } from 'element-plus'
 
 type axiosRequestConfig = AxiosRequestConfig
 
@@ -41,6 +42,14 @@ service.interceptors.response.use(
     if (res.data?.token) {
       const token = res.data.token
       window.sessionStorage.setItem('token', token)
+    }
+
+    if (res.code === -5) {
+      ElMessage({
+        type: 'error',
+        message: '身份认证失败，请重新登录！'
+      })
+      router.push('/login')
     }
 
     if (res.code < 0) {
