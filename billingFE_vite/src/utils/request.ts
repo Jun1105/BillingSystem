@@ -20,6 +20,12 @@ service.interceptors.request.use(
     } else {
       if (config?.headers) config.headers['Content-Type'] = 'application/json'
     }
+    // 发送请求的相关逻辑
+    const token = window.sessionStorage.getItem('token')
+    // 判断token存在再做配置
+    if (token) {
+      config.headers.Authorization = token
+    }
     return config
   },
   error => {
@@ -32,6 +38,11 @@ service.interceptors.response.use(
   response => {
     //返回数据
     const res = response.data
+    if (res.data?.token) {
+      const token = res.data.token
+      window.sessionStorage.setItem('token', token)
+    }
+
     if (res.code < 0) {
       router.push('/404')
     }
