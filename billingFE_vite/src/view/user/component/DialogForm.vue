@@ -109,7 +109,12 @@
   }
 </script>
 <template>
-  <el-dialog :model-value="props.dialogFormVisible" title="权限管理">
+  <el-dialog
+    :model-value="props.dialogFormVisible"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    title="权限管理"
+  >
     <el-form ref="formRef" :model="form" :rules="rules">
       <el-form-item label="角色：" prop="roleId">
         <el-select

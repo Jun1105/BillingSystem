@@ -82,6 +82,9 @@
           <el-input
             v-model="ruleForm.username"
             placeholder="please input username"
+            @keyup="
+              ruleForm.username = ruleForm.username.replace(/[^a-zA-Z]/g, '')
+            "
             clearable
             maxlength="18"
           />

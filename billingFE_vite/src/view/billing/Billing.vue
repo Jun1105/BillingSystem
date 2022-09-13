@@ -144,6 +144,8 @@
   const dialogFormVisible = ref(false)
   const action = ref('')
   const handleCloseDialog = (value, confirm) => {
+    console.log(value)
+
     action.value = ''
     dialogFormVisible.value = value
     if (confirm === 'confirm') {

@@ -251,6 +251,7 @@
               type="text"
               v-model="menuForm.url"
               placeholder="Please input url"
+              @keyup="menuForm.url = menuForm.url.replace(/[^a-zA-Z]/g, '')"
               clearable
             />
           </el-form-item>

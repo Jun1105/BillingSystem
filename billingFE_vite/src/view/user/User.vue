@@ -166,6 +166,9 @@
               type="text"
               v-model="userForm.username"
               placeholder="please input name"
+              @keyup="
+                userForm.username = userForm.username.replace(/[^a-zA-Z]/g, '')
+              "
               clearable
             />
           </el-form-item>

@@ -101,7 +101,12 @@
   }
 </script>
 <template>
-  <el-dialog :model-value="props.dialogFormVisible" title="添加账单">
+  <el-dialog
+    :model-value="props.dialogFormVisible"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    title="添加账单"
+  >
     <el-form ref="formRef" :model="form" :rules="rules">
       <el-form-item label="类型：" prop="typeId">
         <el-select v-model="form.typeId" placeholder="please select type">
@@ -143,7 +148,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="handleClose(formRef)">Cancel</el-button>
+        <el-button type="info" @click="handleClose(formRef)">Cancel</el-button>
         <el-button type="primary" @click="handleConfirm(formRef)">
           Confirm
         </el-button>
