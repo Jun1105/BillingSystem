@@ -5,12 +5,12 @@
   import * as echarts from 'echarts'
   import { onMounted, ref, markRaw } from 'vue'
   import {
-    yesterday,
     sevenBefore,
     sevenAfter,
     getWeek,
     getCurrentMonth,
-    getLastMonth
+    getLastMonth,
+    getDate
   } from '@/utils/date'
   import { getOrderCount, getTypeCount, getWeekOrder } from '@/api/order'
   import { userStore } from '@/stores/user'
@@ -166,7 +166,7 @@
 
     sevenEChartsData.value = sevenECharts
 
-    const seven = yesterday(null)
+    const seven = getDate(new Date())
     const one = sevenBefore(seven)
     loading(true)
 
@@ -202,7 +202,7 @@
     pieUnRef = sevenPieCharts
     sevenPieData.value = sevenPieCharts
 
-    const seven = yesterday(null)
+    const seven = getDate(new Date())
     const one = sevenBefore(seven)
 
     const res: any = await getTypeCount({
@@ -237,7 +237,8 @@
 
     weekEChartsData.value = weekECharts
 
-    const [startDate, endDate] = getWeek(4)
+    const [startDate, endDate] = getWeek(5)
+
     const res: any = await getWeekOrder({
       userId: user.$state.userId,
       startDate: startDate,
@@ -263,7 +264,7 @@
 
   const handleRadioChange = async value => {
     if (value === '近七日') {
-      const seven = yesterday(null)
+      const seven = getDate(new Date())
       const one = sevenBefore(seven)
       setEchartsOption(one, seven)
     } else if (value === '本月') {

@@ -39,7 +39,7 @@ function getOneWeek(n) {
 }
 
 /**
- * 获取上周日~n周前周一
+ * 获取本周日~n周前周一
  * @date 2022-09-08
  * @param {int} n
  * @returns {Array}
@@ -47,7 +47,7 @@ function getOneWeek(n) {
 function getWeek(n) {
   const now = new Date()
   const day = new Date().getDay()
-  const lastSun = now.getTime() - 24 * 60 * 60 * 1000 * day
+  const lastSun = now.getTime() + 24 * 60 * 60 * 1000 * (7 - day)
   const lastMon = lastSun - 24 * 60 * 60 * 1000 * 6
   const mon = lastMon - 24 * 60 * 60 * 1000 * 7 * (n - 1)
   return [getDate(mon), getDate(lastSun)]

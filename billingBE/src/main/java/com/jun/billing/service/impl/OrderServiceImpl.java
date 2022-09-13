@@ -116,6 +116,9 @@ public class OrderServiceImpl implements OrderService {
         //一周前
         List<LocalDate> oneWeekBefore = DateUtil.getLastDate(1);
         OrderCount orderCount1 = new OrderCount(oneWeekBefore.get(0), new BigDecimal(0));
+        //本周
+        List<LocalDate> currentWeekBefore = DateUtil.getLastDate(0);
+        OrderCount orderCount0 = new OrderCount(currentWeekBefore.get(0), new BigDecimal(0));
         //循环遍历数据库数据获取每周总共金额
         orderCount.stream().forEach(o->{
             if((fourWeekBefore.get(0).isBefore(o.getDate()) || fourWeekBefore.get(0).isEqual(o.getDate()))
@@ -138,6 +141,11 @@ public class OrderServiceImpl implements OrderService {
                 if(o.getTotalAmount() !=null){
                     orderCount1.setTotalAmount(orderCount1.getTotalAmount().add(o.getTotalAmount()));
                 }
+            } else if((currentWeekBefore.get(0).isBefore(o.getDate()) || currentWeekBefore.get(0).isEqual(o.getDate()))
+                    && (currentWeekBefore.get(1).isAfter(o.getDate()) || currentWeekBefore.get(1).isEqual(o.getDate()))){
+                if(o.getTotalAmount() !=null){
+                    orderCount0.setTotalAmount(orderCount0.getTotalAmount().add(o.getTotalAmount()));
+                }
             }
         });
         List<OrderCount> orderCountList = new ArrayList<>();
@@ -145,6 +153,7 @@ public class OrderServiceImpl implements OrderService {
         orderCountList.add(orderCount3);
         orderCountList.add(orderCount2);
         orderCountList.add(orderCount1);
+        orderCountList.add(orderCount0);
         return orderCountList;
     }
 
