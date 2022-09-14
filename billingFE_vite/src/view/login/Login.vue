@@ -78,34 +78,45 @@
         label-width="120px"
         status-icon
       >
-        <el-form-item label="用户名" prop="username">
-          <el-input
-            v-model="ruleForm.username"
-            placeholder="please input username"
-            @keyup="
-              ruleForm.username = ruleForm.username.replace(/[^a-zA-Z]/g, '')
-            "
-            clearable
-            maxlength="18"
-          />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input
-            type="password"
-            show-password
-            placeholder="please input password"
-            clearable
-            maxlength="18"
-            v-model="ruleForm.password"
-            @keyup.enter="submitForm(formRef)"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm(formRef)">
-            Submit
-          </el-button>
-          <el-button @click="resetForm(formRef)">Reset</el-button>
-        </el-form-item>
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-form-item label="用户名" prop="username">
+              <el-input
+                v-model="ruleForm.username"
+                placeholder="please input username"
+                @keyup="
+                  ruleForm.username = ruleForm.username.replace(
+                    /[^a-zA-Z]/g,
+                    ''
+                  )
+                "
+                clearable
+                maxlength="18"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-form-item label="密码" prop="password">
+              <el-input
+                type="password"
+                show-password
+                placeholder="please input password"
+                clearable
+                maxlength="18"
+                v-model="ruleForm.password"
+                @keyup.enter="submitForm(formRef)"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-form-item>
+              <el-button type="primary" @click="submitForm(formRef)">
+                Submit
+              </el-button>
+              <el-button @click="resetForm(formRef)">Reset</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <h6>
         <el-tooltip
