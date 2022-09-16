@@ -225,7 +225,11 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="10" :lg="6" :xl="4">
           <el-form-item label="类型：">
-            <el-select v-model="order.typeId" placeholder="please select type">
+            <el-select
+              v-model="order.typeId"
+              clearable
+              placeholder="please select type"
+            >
               <el-option
                 v-for="item in typeList"
                 :key="item.id"
@@ -242,6 +246,7 @@
               v-model="order.description"
               placeholder="Such as breakfast"
               maxlength="20"
+              clearable
               show-word-limit
             />
           </el-form-item>
