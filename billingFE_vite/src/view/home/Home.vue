@@ -153,7 +153,7 @@
         total += v.totalAmount
       })
     }
-    totalAmount.value = total
+    totalAmount.value = total.toFixed(2)
   }
 
   const getSevenEcharts = async () => {
