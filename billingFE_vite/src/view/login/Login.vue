@@ -131,15 +131,18 @@
       </h6>
     </el-card>
   </div>
+  <div class="foot">
+    <a href="https://beian.miit.gov.cn/">鄂ICP备 2022015325号</a>
+  </div>
 </template>
 <style lang="scss">
   .box-card {
-    min-height: 100vh;
-    background-image: linear-gradient(
-      to left,
-      rgb(149, 154, 245),
-      rgb(71, 71, 245)
-    );
+    min-height: calc(100vh - 40px);
+    // background-image: linear-gradient(
+    //   to left,
+    //   rgb(149, 154, 245),
+    //   rgb(71, 71, 245)
+    // );
     .card {
       position: absolute;
       top: 50%;
@@ -155,6 +158,16 @@
           color: red;
         }
       }
+    }
+  }
+  .foot {
+    height: 40px;
+    line-height: 40px;
+    background: #666666;
+    text-align: center;
+    a {
+      color: #fff;
+      text-decoration: none;
     }
   }
 </style>
