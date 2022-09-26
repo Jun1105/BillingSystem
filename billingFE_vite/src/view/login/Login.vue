@@ -136,6 +136,11 @@
   </div>
 </template>
 <style lang="scss">
+  @media screen and (max-width: 768px) {
+    .box-card .card {
+      width: 100vw !important;
+    }
+  }
   .box-card {
     min-height: calc(100vh - 40px);
     // background-image: linear-gradient(
