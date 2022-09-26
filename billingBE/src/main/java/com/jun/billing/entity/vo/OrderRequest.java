@@ -22,7 +22,7 @@ public class OrderRequest {
     private LocalDate dateTo;
 
     public LocalDate getDateFm() {
-        if(this.dates.length > 1){
+        if(this.dates != null && this.dates.length > 1){
             return this.dates[0];
         }
         else {
@@ -31,7 +31,7 @@ public class OrderRequest {
     }
 
     public LocalDate getDateTo() {
-        if(this.dates.length > 1){
+        if(this.dates != null && this.dates.length > 1){
             return this.dates[1];
         }
         else {
