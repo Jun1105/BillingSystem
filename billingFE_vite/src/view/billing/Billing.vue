@@ -105,7 +105,8 @@
     getOrderData({
       userId: user.$state.userId,
       page: currentPage,
-      size: pageSize
+      size: pageSize,
+      ...order
     })
   }
 
