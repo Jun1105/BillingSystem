@@ -3,9 +3,16 @@
 <script setup lang="ts">
   import { T } from 'unimport/dist/types-43c63a16'
   import { ref } from 'vue'
+  interface tableColumnProp {
+    prop: string
+    label: string
+    width?: string
+    sort?: boolean
+    formatter?: unknown
+  }
   interface Props {
     tableData: Array<T>
-    tableColumn: Array<T>
+    tableColumn: Array<tableColumnProp>
     isPagination?: boolean
     total?: number
     handleSortChange?: any

@@ -9,15 +9,30 @@
   import { getType } from '@/api/common'
   import { userStore } from '@/stores/user'
   import loading from '@/utils/loading'
+  interface Order {
+    typeId: number
+    description: string
+    amount: number
+    minAmount: number
+    maxAmount: number
+    date: Date
+    dates: Array<Date>
+  }
   const user = userStore()
-  const order = reactive({
+  const order: Order = reactive({
     typeId: null,
     description: null,
     amount: 0,
-    date: null
+    minAmount: null,
+    maxAmount: null,
+    date: null,
+    dates: []
   })
   const typeList = ref([])
+  const tableRef = ref()
 
+  const tablePage = ref(1)
+  const tableSize = ref(10)
   const total = ref(5)
   const tableData = ref([])
   const tableColumn = ref([
@@ -102,6 +117,8 @@
   }
 
   const handleCurrentChange = async (currentPage, pageSize) => {
+    tablePage.value = currentPage
+    tableSize.value = pageSize
     getOrderData({
       userId: user.$state.userId,
       page: currentPage,
@@ -111,18 +128,26 @@
   }
 
   const handleSizeChange = (currentPage, size) => {
+    tablePage.value = currentPage
+    tableSize.value = size
     getOrderData({
       userId: user.$state.userId,
       page: currentPage,
-      size: size
+      size: size,
+      ...order
     })
   }
 
-  const handleSortChange = ({ prop, order }) => {
+  const handleSortChange = ({ prop, order: orderType }) => {
+    const size = tableSize.value
+    const page = tablePage.value
     getOrderData({
       userId: user.$state.userId,
       orderBy: prop,
-      sort: order === 'ascending'
+      sort: orderType === 'ascending',
+      size,
+      page,
+      ...order
     })
   }
 
@@ -305,6 +330,7 @@
   </el-card>
   <el-card :style="{ marginTop: '20px' }">
     <Table
+      ref="tableRef"
       :table-data="tableData"
       :table-column="tableColumn"
       :total="total"
