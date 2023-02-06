@@ -162,7 +162,7 @@
     let sevenECharts = echarts.init(sevenChartDom)
 
     //vue3一个坑：echarts动态渲染的数据不能是响应式的
-    sevenUnRef = markRaw(sevenECharts)
+    // sevenUnRef = markRaw(sevenECharts)
 
     sevenEChartsData.value = sevenECharts
 
@@ -231,11 +231,11 @@
   const getWeekECharts = async () => {
     const weekChartDom = document.getElementById('week')
 
-    let weekECharts = echarts.init(weekChartDom)
+    weekUnRef = echarts.init(weekChartDom)
 
-    weekUnRef = markRaw(weekECharts)
+    // weekUnRef = markRaw(weekECharts)
 
-    weekEChartsData.value = weekECharts
+    // weekEChartsData.value = weekECharts
 
     const [startDate, endDate] = getWeek(5)
 
@@ -344,13 +344,13 @@
     </el-col>
   </el-row>
   <el-row class="second" :gutter="20">
-    <el-col :xs="24" :sm="24" :md="18" :lg="18">
+    <el-col :xs="24" :sm="24" :md="14" :lg="14">
       <el-card>
         <h3 class="text_center">每周消费</h3>
         <div id="week" class="echarts"></div>
       </el-card>
     </el-col>
-    <el-col :xs="24" :sm="24" :md="6" :lg="6">
+    <el-col :xs="24" :sm="24" :md="10" :lg="10">
       <el-card>
         <h3 class="text_center">{{ monthSelect }}消费类型总计</h3>
         <div id="type" class="echarts"></div>
