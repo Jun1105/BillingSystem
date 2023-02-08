@@ -162,7 +162,7 @@
     let sevenECharts = echarts.init(sevenChartDom)
 
     //vue3一个坑：echarts动态渲染的数据不能是响应式的
-    // sevenUnRef = markRaw(sevenECharts)
+    sevenUnRef = markRaw(sevenECharts)
 
     sevenEChartsData.value = sevenECharts
 
